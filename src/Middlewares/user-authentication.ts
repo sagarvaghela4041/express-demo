@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../constants/messages';
+import { messages } from '../constants/messages';
 import jwt from 'jsonwebtoken';
 import { User } from '../entitymodels/user';
 import { RegistraionDTO } from '../models/user-validation';
@@ -14,7 +14,7 @@ export async function authentication(req: Request, res: Response, next: NextFunc
 
         const userCheck = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
         if (userCheck == null) {
-            res.json({ message: INVALID_CREDENTIALS });
+            res.json({ message: messages.invalid_credentailss });
         }
         else {
             const varifiedUser = jwt.verify(userCheck.token, `${process.env.PRIVATE_KEY}`) as { id: string };
@@ -23,7 +23,7 @@ export async function authentication(req: Request, res: Response, next: NextFunc
                 next();
             }
             else {
-                res.json({ message: TOKEN_NOT_MATCHED });
+                res.json({ message: messages.token_not_matched });
             }
         }
 
