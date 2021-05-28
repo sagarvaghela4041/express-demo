@@ -59,7 +59,7 @@ export class CategoryServices {
         const id = req.params.id;
         const category = await Category.findById(id);
         if(category === null) {
-            res.json({message: messages.category_not_found })
+            res.json({message: messages.category_not_found });
         }
         else{
             res.json(category);
@@ -77,6 +77,16 @@ export class CategoryServices {
         await Category.updateOne(categoryToUpdate,newCategory);
         res.json(newCategory);
         
+    }
+
+    async searchCategory(req:Request, res:Response) {
+
+        const searchParams = req.body;
+        const sort = searchParams.order.direction === 'asc'?'':'-';
+        const result = await Category.find({$and:[{'name':searchParams.name},{'active':searchParams.active}]}).
+                                    limit(searchParams.limit).skip(searchParams.offset).sort(sort+searchParams.order.order_by);
+        res.json(result);
+
     }
 
 

@@ -15,6 +15,6 @@ categoryRouter.get('/v1/category/:id', (req:Request, res:Response) => categorySe
 
 categoryRouter.patch('/v1/category/:id', (req:Request, res:Response) => categoryServices.updateCategory(req,res));
 
-
+categoryRouter.post('/v1/category/search', (req:Request, res:Response) => categoryServices.searchCategory(req,res));
 
 export {categoryRouter}
