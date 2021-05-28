@@ -62,9 +62,7 @@ var CategoryServices = /** @class */ (function () {
                         savedCategory = _a.sent();
                         res.json(savedCategory);
                         return [3 /*break*/, 4];
-                    case 3:
-                        res.json({ message: isValidCategory });
-                        _a.label = 4;
+                    case 3: throw new Error(JSON.stringify(isValidCategory));
                     case 4: return [2 /*return*/];
                 }
             });

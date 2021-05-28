@@ -17,7 +17,8 @@ export class CategoryServices {
             res.json(savedCategory);
         }
         else{
-            res.json({message:isValidCategory});
+            throw new Error(JSON.stringify(isValidCategory));
+            //res.json({message:isValidCategory});
         }
     }
 
