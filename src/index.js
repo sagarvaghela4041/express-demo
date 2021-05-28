@@ -37,3 +37,4 @@ app.use(route_1.router);
 app.use(category_routes_1.categoryRouter);
 app.use(error_handler_1.errorHandler);
 app.listen("" + process.env.PORT, function () { return console.log("Server started on port: " + process.env.PORT); });
+"console.log('TypeScript Eslint Prettier Starter Template!')";
