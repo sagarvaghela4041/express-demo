@@ -66,6 +66,7 @@ export class UserServices {
 
     }
 
+    
 
     async getUserDetails(req: Request, res: Response) {
 
