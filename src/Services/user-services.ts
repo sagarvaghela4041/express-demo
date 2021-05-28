@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../EntityModels/user';
-import { RegistraionDTO } from '../Models/user-validation';
+import { User } from '../entitymodels/user';
+import { RegistraionDTO } from '../models/user-validation';
 import { ValidationServices } from './validation-service';
 import * as dotenv from "dotenv";
-import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../Constants/messages';
+import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../constants/messages';
 dotenv.config();
 
 

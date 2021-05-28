@@ -1,6 +1,6 @@
 import { validate, ValidationError } from "class-validator";
-import { CategoryDTO } from "../Models/category-validation";
-import { RegistraionDTO } from "../Models/user-validation";
+import { CategoryDTO } from "../models/category-validation";
+import { RegistraionDTO } from "../models/user-validation";
 
 export class ValidationServices {
 

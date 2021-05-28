@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../Constants/messages';
+import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../constants/messages';
 import jwt from 'jsonwebtoken';
-import { User } from '../EntityModels/user';
-import { RegistraionDTO } from '../Models/user-validation';
-import { ValidationServices } from '../Services/validation-service';
+import { User } from '../entitymodels/user';
+import { RegistraionDTO } from '../models/user-validation';
+import { ValidationServices } from '../services/validation-service';
 
 export async function authentication(req: Request, res: Response, next: NextFunction) {
     const user = new RegistraionDTO(req.body);

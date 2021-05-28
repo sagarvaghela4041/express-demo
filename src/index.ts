@@ -1,10 +1,10 @@
 import express from 'express';
-import {database_connection} from './Services/database-service';
+import {database_connection} from './services/database-service';
 import {json} from 'body-parser';
-import {router} from './Routes/route';
+import {router} from './routes/route';
 import * as dotenv from "dotenv";
-import { errorHandler } from './Middlewares/error-handler';
-import { categoryRouter } from './Routes/category-routes';
+import { errorHandler } from './middlewares/error-handler';
+import { categoryRouter } from './routes/category-routes';
 dotenv.config();
 
 

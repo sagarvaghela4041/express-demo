@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
-import { messages } from '../Constants/messages';
-import { Category } from '../EntityModels/category';
-import { CategoryDTO } from '../Models/category-validation';
+import { messages } from '../constants/messages';
+import { Category } from '../entitymodels/category';
+import { CategoryDTO } from '../models/category-validation';
 import { ValidationServices } from './validation-service';
 
 export class CategoryServices {
