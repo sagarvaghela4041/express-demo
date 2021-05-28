@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 
 const UserModel = new mongoose.Schema({
 
-    firstName: String,
+    first_name: String,
 
-    lastName: String,
+    last_name: String,
 
-    dateOfBirth: Date,
+    date_of_birth: Date,
 
     phone: String,
     
-    userName: {
+    user_name: {
         type: String,
         index: {
             unique: true
