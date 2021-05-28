@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../Constants/messages';
 import jwt from 'jsonwebtoken';
-import { User } from '../EntityModels/user-model';
+import { User } from '../EntityModels/user';
 import { RegistraionDTO } from '../Models/user-validation';
 import { ValidationServices } from '../Services/validation-service';
 

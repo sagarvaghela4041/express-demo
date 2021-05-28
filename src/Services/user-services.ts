@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../EntityModels/user-model';
+import { User } from '../EntityModels/user';
 import { RegistraionDTO } from '../Models/user-validation';
 import { ValidationServices } from './validation-service';
 import * as dotenv from "dotenv";
@@ -15,7 +15,7 @@ export class UserServices {
 
         const newUser = new RegistraionDTO(req.body);
         const validationServices = new ValidationServices();
-        const isValidUser = await validationServices.validateDTO(newUser);
+        const isValidUser = await validationServices.validateUserDTO(newUser);
 
         if (!isValidUser) {
 

@@ -1,21 +1,22 @@
 import { validate, ValidationError } from "class-validator";
+import { CategoryDTO } from "../Models/category-validation";
 import { RegistraionDTO } from "../Models/user-validation";
 
 export class ValidationServices {
 
-    async validateDTO(user: RegistraionDTO) {
+    async validateUserDTO(user: RegistraionDTO) {
 
-        const check = await validate(user);
-        if (check.length > 0) {
-            return this.createResponse(check);
+        const isValidUser = await validate(user);
+        if (isValidUser.length > 0) {
+            return this.createResponse(isValidUser);
         }
     }
     
     async validateCredentials(user: RegistraionDTO) {
     
-        const check = await validate(user, { groups: ['credentials'] });
-        if (check.length > 0) {
-            return this.createResponse(check);
+        const isValid = await validate(user, { groups: ['credentials'] });
+        if (isValid.length > 0) {
+            return this.createResponse(isValid);
         }
     }
     
@@ -30,5 +31,15 @@ export class ValidationServices {
         }
         return response;
     }
+
+    
+    async validateCategoryDTO(category: CategoryDTO) {
+        const isValidCategory = await validate(category);
+        if (isValidCategory.length > 0) {
+            return this.createResponse(isValidCategory);
+        }
+    }
+
+
 
 }
