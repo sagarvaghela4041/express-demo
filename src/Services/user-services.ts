@@ -4,7 +4,7 @@ import { User } from '../entitymodels/user';
 import { RegistraionDTO } from '../models/user-validation';
 import { ValidationServices } from './validation-service';
 import * as dotenv from "dotenv";
-import { INVALID_CREDENTIALS, TOKEN_NOT_MATCHED, VALID_USER } from '../constants/messages';
+import { messages } from '../constants/messages';
 dotenv.config();
 
 
@@ -48,16 +48,16 @@ export class UserServices {
 
             const userCheck = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
             if (userCheck == null) {
-                res.json({ message: INVALID_CREDENTIALS });
+                res.json({ message: messages.invalid_credentailss });
             }
 
             const varifiedUser = jwt.verify(userCheck.token, `${process.env.PRIVATE_KEY}`) as { id: string };
 
             if (userCheck._id == varifiedUser.id) {
-                res.json({ message: VALID_USER });
+                res.json({ message: messages.valid_user });
             }
             else {
-                res.json({ message: TOKEN_NOT_MATCHED });
+                res.json({ message: messages.token_not_matched });
             }
         }
         else {
@@ -73,7 +73,7 @@ export class UserServices {
         const user = new RegistraionDTO(req.body);
         const userDetails = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
         if (userDetails == null) {
-            res.json({ message: INVALID_CREDENTIALS });
+            res.json({ message: messages.invalid_credentailss });
         }
         else{
             res.json(userDetails);
