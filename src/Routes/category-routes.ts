@@ -13,6 +13,8 @@ categoryRouter.delete('/v1/category/:id', (req:Request, res: Response) => catego
 
 categoryRouter.get('/v1/category/:id', (req:Request, res:Response) => categoryServices.getCategory(req,res));
 
-categoryRouter.patch('/v1/category/:id');
+categoryRouter.patch('/v1/category/:id', (req:Request, res:Response) => categoryServices.updateCategory(req,res));
+
+
 
 export {categoryRouter}

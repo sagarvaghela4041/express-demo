@@ -66,5 +66,18 @@ export class CategoryServices {
         }
     }
 
+    async updateCategory(req:Request, res:Response) {
+        const id = req.params.id;
+        const categoryToUpdate = await Category.findById(id);
+        const newCategory = req.body;
+        const tempCategory = JSON.parse(JSON.stringify(categoryToUpdate));
+        for(const p in tempCategory) {
+            newCategory[p] = newCategory[p]?newCategory[p]:tempCategory[p];
+        }
+        await Category.updateOne(categoryToUpdate,newCategory);
+        res.json(newCategory);
+        
+    }
+
 
 }
