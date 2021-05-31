@@ -5,3 +5,5 @@ export const messages = {
     token_not_matched: 'token not matched !',
     category_not_found: 'Category not found with provided id !'
 };
+
+export const categoryVersion = 'v1';

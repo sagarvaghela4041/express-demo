@@ -44,9 +44,10 @@ function errorHandler(err, req, res, next) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("You must print");
                     error = new error_1.ErrorLog();
                     error.error_name = err.name;
-                    error.error_message = JSON.parse(err.message);
+                    error.error_message = err.message;
                     error.api = req.url;
                     error.created_date = new Date();
                     error.created_by = "test";

@@ -5,16 +5,16 @@ const categoryRouter = Router();
 
 const categoryServices = new CategoryServices();
 
-categoryRouter.post('/v1/category', (req: Request, res: Response, next: NextFunction) => categoryServices.saveCategory(req, res).catch(next));
+categoryRouter.post('', categoryServices.saveCategory);
 
-categoryRouter.put('/v1/category/:id', (req: Request, res: Response) => categoryServices.updateFullCategory(req, res));
+categoryRouter.put('/:id', categoryServices.updateFullCategory);
 
-categoryRouter.delete('/v1/category/:id', (req: Request, res: Response) => categoryServices.deleteCategory(req, res));
+categoryRouter.delete('/:id', categoryServices.deleteCategory);
 
-categoryRouter.get('/v1/category/:id', (req: Request, res: Response) => categoryServices.getCategory(req, res));
+categoryRouter.get('/:id', categoryServices.getCategory);
 
-categoryRouter.patch('/v1/category/:id', (req: Request, res: Response) => categoryServices.updateCategory(req, res));
+categoryRouter.patch('/:id', categoryServices.updateCategory);
 
-categoryRouter.post('/v1/category/search', (req: Request, res: Response) => categoryServices.searchCategory(req, res));
+categoryRouter.post('/search', categoryServices.searchCategory);
 
 export { categoryRouter }
