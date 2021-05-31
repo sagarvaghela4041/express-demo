@@ -12,8 +12,8 @@ dotenv.config();
 const app = express();
 database_connection();
 app.use(json());
-app.use(generalRouter);
 app.use(router);
+app.use(generalRouter);
 app.use(categoryRouter);
 app.use(errorHandler);
 

@@ -12,7 +12,7 @@ export async function authentication(req: Request, res: Response, next: NextFunc
 
     if (!isValidUser) {
 
-        const userCheck = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
+        const userCheck = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });
         if (userCheck == null) {
             res.json({ message: messages.invalid_credentailss });
         }

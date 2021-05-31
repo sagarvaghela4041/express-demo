@@ -16,7 +16,6 @@ export class UserServices {
         const newUser = new RegistraionDTO(req.body);
         const validationServices = new ValidationServices();
         const isValidUser = await validationServices.validateUserDTO(newUser);
-
         if (!isValidUser) {
 
 
@@ -46,19 +45,22 @@ export class UserServices {
 
         if (!isValidUser) {
 
-            const userCheck = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
-            if (userCheck == null) {
+            const userCheck = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });
+            if (userCheck === null) {
                 res.json({ message: messages.invalid_credentailss });
             }
-
-            const varifiedUser = jwt.verify(userCheck.token, `${process.env.PRIVATE_KEY}`) as { id: string };
-
-            if (userCheck._id == varifiedUser.id) {
-                res.json({ message: messages.valid_user });
-            }
             else {
-                res.json({ message: messages.token_not_matched });
+                const varifiedUser = jwt.verify(userCheck.token, `${process.env.PRIVATE_KEY}`) as { id: string };
+
+                if (userCheck._id == varifiedUser.id) {
+                    res.json({ message: messages.valid_user });
+                }
+                else {
+                    res.json({ message: messages.token_not_matched });
+                }
             }
+
+
         }
         else {
             res.json({ message: isValidUser });
@@ -66,16 +68,16 @@ export class UserServices {
 
     }
 
-    
+
 
     async getUserDetails(req: Request, res: Response) {
 
         const user = new RegistraionDTO(req.body);
-        const userDetails = await User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] });
+        const userDetails = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });
         if (userDetails == null) {
             res.json({ message: messages.invalid_credentailss });
         }
-        else{
+        else {
             res.json(userDetails);
         }
 

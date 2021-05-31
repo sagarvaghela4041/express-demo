@@ -8,7 +8,6 @@ var BaseServices = /** @class */ (function () {
         res.json(responseToSend);
     };
     BaseServices.prototype.sendValidationError = function (errorToSend, res) {
-        res.sendStatus(400);
         res.json(errorToSend);
     };
     return BaseServices;

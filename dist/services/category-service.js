@@ -64,24 +64,7 @@ var CategoryServices = /** @class */ (function (_super) {
     }
     CategoryServices.prototype.saveCategory = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newCategory, validationServices, isValidCategory;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        newCategory = new category_validation_1.CategoryDTO(req.body);
-                        validationServices = new validation_service_1.ValidationServices();
-                        return [4 /*yield*/, validationServices.validateDTO(category_validation_1.CategoryDTO, req.body)];
-                    case 1:
-                        isValidCategory = _a.sent();
-                        console.log(isValidCategory);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    CategoryServices.prototype.updateFullCategory = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var newCategory, validationServices, isValidCategory, id, category;
+            var newCategory, validationServices, validationErrors, categoryModel, savedCategory;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -89,8 +72,34 @@ var CategoryServices = /** @class */ (function (_super) {
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
                     case 1:
-                        isValidCategory = _a.sent();
-                        if (!!isValidCategory) return [3 /*break*/, 6];
+                        validationErrors = _a.sent();
+                        if (!!validationErrors) return [3 /*break*/, 3];
+                        categoryModel = new category_1.Category(req.body);
+                        return [4 /*yield*/, categoryModel.save()];
+                    case 2:
+                        savedCategory = _a.sent();
+                        _super.prototype.sendResponse.call(this, savedCategory, res);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        _super.prototype.sendValidationError.call(this, validationErrors, res);
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CategoryServices.prototype.updateFullCategory = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var newCategory, validationServices, validationErrors, id, category;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        newCategory = new category_validation_1.CategoryDTO(req.body);
+                        validationServices = new validation_service_1.ValidationServices();
+                        return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
+                    case 1:
+                        validationErrors = _a.sent();
+                        if (!!validationErrors) return [3 /*break*/, 6];
                         id = req.params.id;
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 2:
@@ -98,14 +107,14 @@ var CategoryServices = /** @class */ (function (_super) {
                         if (!!category) return [3 /*break*/, 3];
                         _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, category_1.Category.updateOne(category, newCategory)];
+                    case 3: return [4 /*yield*/, category_1.Category.updateOne({ _id: id }, newCategory)];
                     case 4:
                         _a.sent();
                         _super.prototype.sendResponse.call(this, newCategory, res);
                         _a.label = 5;
                     case 5: return [3 /*break*/, 7];
                     case 6:
-                        _super.prototype.sendValidationError.call(this, { message: isValidCategory }, res);
+                        _super.prototype.sendValidationError.call(this, { message: validationErrors }, res);
                         _a.label = 7;
                     case 7: return [2 /*return*/];
                 }
@@ -125,7 +134,7 @@ var CategoryServices = /** @class */ (function (_super) {
                         if (!!category) return [3 /*break*/, 2];
                         _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, category_1.Category.deleteOne(category)];
+                    case 2: return [4 /*yield*/, category_1.Category.deleteOne({ _id: id })];
                     case 3:
                         _a.sent();
                         _super.prototype.sendResponse.call(this, category, res);
@@ -175,7 +184,7 @@ var CategoryServices = /** @class */ (function (_super) {
                         for (p in tempCategory) {
                             newCategory[p] = newCategory[p] ? newCategory[p] : tempCategory[p];
                         }
-                        return [4 /*yield*/, category_1.Category.updateOne(categoryToUpdate, newCategory)];
+                        return [4 /*yield*/, category_1.Category.updateOne({ _id: id }, newCategory)];
                     case 3:
                         _a.sent();
                         _super.prototype.sendResponse.call(this, newCategory, res);

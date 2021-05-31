@@ -1,29 +1,28 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const UserModel = new mongoose.Schema({
+export interface IUserModel extends Document {
+    first_name: string;
+    last_name: string;
+    date_of_birth: Date;
+    phone: string;
+    user_name: string;
+    password: string;
+    token: string;
+}
 
+const UserModel: Schema = new Schema({
     first_name: String,
-
     last_name: String,
-
     date_of_birth: Date,
-
     phone: String,
-    
     user_name: {
         type: String,
         index: {
             unique: true
         }
     },
-
     password: String,
-
-    token: String,
-
-
+    token: String
 });
 
-const User = mongoose.model('UserAuth',UserModel);
-
-export {User}
+export const User = mongoose.model<IUserModel>('UserAuth', UserModel);

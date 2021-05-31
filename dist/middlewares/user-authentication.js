@@ -57,7 +57,7 @@ function authentication(req, res, next) {
                 case 1:
                     isValidUser = _a.sent();
                     if (!!isValidUser) return [3 /*break*/, 3];
-                    return [4 /*yield*/, user_1.User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] })];
+                    return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
                 case 2:
                     userCheck = _a.sent();
                     if (userCheck == null) {

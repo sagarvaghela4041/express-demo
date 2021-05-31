@@ -109,18 +109,20 @@ var UserServices = /** @class */ (function () {
                     case 1:
                         isValidUser = _a.sent();
                         if (!!isValidUser) return [3 /*break*/, 3];
-                        return [4 /*yield*/, user_1.User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] })];
+                        return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
                     case 2:
                         userCheck = _a.sent();
-                        if (userCheck == null) {
+                        if (userCheck === null) {
                             res.json({ message: messages_1.messages.invalid_credentailss });
                         }
-                        varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
-                        if (userCheck._id == varifiedUser.id) {
-                            res.json({ message: messages_1.messages.valid_user });
-                        }
                         else {
-                            res.json({ message: messages_1.messages.token_not_matched });
+                            varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
+                            if (userCheck._id == varifiedUser.id) {
+                                res.json({ message: messages_1.messages.valid_user });
+                            }
+                            else {
+                                res.json({ message: messages_1.messages.token_not_matched });
+                            }
                         }
                         return [3 /*break*/, 4];
                     case 3:
@@ -138,7 +140,7 @@ var UserServices = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         user = new user_validation_1.RegistraionDTO(req.body);
-                        return [4 /*yield*/, user_1.User.findOne({ '$and': [{ 'userName': user.userName }, { 'password': user.password }] })];
+                        return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
                     case 1:
                         userDetails = _a.sent();
                         if (userDetails == null) {

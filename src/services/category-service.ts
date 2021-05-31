@@ -10,24 +10,24 @@ export class CategoryServices extends BaseServices {
     async saveCategory(req: Request, res: Response) {
         const newCategory = new CategoryDTO(req.body);
         const validationServices = new ValidationServices();
-        const isValidCategory = await validationServices.validateCategoryDTO(newCategory);
-        if (!isValidCategory) {
+        const validationErrors = await validationServices.validateCategoryDTO(newCategory);
+        if (!validationErrors) {
 
             const categoryModel = new Category(req.body);
             const savedCategory = await categoryModel.save();
             super.sendResponse(savedCategory, res);
         }
         else {
-            super.sendValidationError(isValidCategory, res);
+            super.sendValidationError(validationErrors, res);
         }
     }
 
     async updateFullCategory(req: Request, res: Response) {
         const newCategory = new CategoryDTO(req.body);
         const validationServices = new ValidationServices();
-        const isValidCategory = await validationServices.validateCategoryDTO(newCategory);
+        const validationErrors = await validationServices.validateCategoryDTO(newCategory);
 
-        if (!isValidCategory) {
+        if (!validationErrors) {
 
             const id = req.params.id;
             const category = await Category.findById(id);
@@ -35,12 +35,12 @@ export class CategoryServices extends BaseServices {
                 super.sendValidationError({ message: messages.category_not_found }, res);
             }
             else {
-                await Category.updateOne(category, newCategory);
+                await Category.updateOne({ _id: id }, newCategory);
                 super.sendResponse(newCategory, res);
             }
         }
         else {
-            super.sendValidationError({ message: isValidCategory }, res);
+            super.sendValidationError({ message: validationErrors }, res);
         }
     }
 
@@ -51,7 +51,7 @@ export class CategoryServices extends BaseServices {
             super.sendValidationError({ message: messages.category_not_found }, res)
         }
         else {
-            await Category.deleteOne(category);
+            await Category.deleteOne({ _id: id });
             super.sendResponse(category, res);
         }
     }
@@ -79,7 +79,7 @@ export class CategoryServices extends BaseServices {
             for (const p in tempCategory) {
                 newCategory[p] = newCategory[p] ? newCategory[p] : tempCategory[p];
             }
-            await Category.updateOne(categoryToUpdate, newCategory);
+            await Category.updateOne({ _id: id }, newCategory);
             super.sendResponse(newCategory, res);
         }
 
