@@ -6,7 +6,6 @@ export class BaseServices {
     }
 
     sendValidationError(errorToSend: object, res: Response): void {
-        res.sendStatus(400);
         res.json(errorToSend);
     }
 }

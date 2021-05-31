@@ -10,10 +10,8 @@ export class CategoryServices extends BaseServices {
     async saveCategory(req: Request, res: Response) {
         const newCategory = new CategoryDTO(req.body);
         const validationServices = new ValidationServices();
-        //const isValidCategory = await validationServices.validateCategoryDTO(newCategory);
-        const isValidCategory = await validationServices.validateDTO(newCategory);
-        console.log(isValidCategory);
-        /*if (!isValidCategory) {
+        const isValidCategory = await validationServices.validateCategoryDTO(newCategory);
+        if (!isValidCategory) {
 
             const categoryModel = new Category(req.body);
             const savedCategory = await categoryModel.save();
@@ -21,7 +19,7 @@ export class CategoryServices extends BaseServices {
         }
         else {
             super.sendValidationError(isValidCategory, res);
-        }*/
+        }
     }
 
     async updateFullCategory(req: Request, res: Response) {

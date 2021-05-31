@@ -1,8 +1,6 @@
-import 'reflect-metadata';
 import { validate, ValidationError } from "class-validator";
 import { CategoryDTO } from "../models/category-validation";
 import { RegistraionDTO } from "../models/user-validation";
-import { plainToClass } from 'class-transformer';
 
 export class ValidationServices {
 
@@ -39,13 +37,6 @@ export class ValidationServices {
         const isValidCategory = await validate(category);
         if (isValidCategory.length > 0) {
             return this.createResponse(isValidCategory);
-        }
-    }
-
-    async validateDTO(object: CategoryDTO) {
-        const isValidDTO = await validate(plainToClass(CategoryDTO, object));
-        if (isValidDTO.length > 0) {
-            return this.createResponse(isValidDTO);
         }
     }
 
