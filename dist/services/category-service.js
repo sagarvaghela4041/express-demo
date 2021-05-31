@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -40,9 +55,12 @@ exports.CategoryServices = void 0;
 var messages_1 = require("../constants/messages");
 var category_1 = require("../entitymodels/category");
 var category_validation_1 = require("../models/category-validation");
+var services_base_1 = require("./services-base");
 var validation_service_1 = require("./validation-service");
-var CategoryServices = /** @class */ (function () {
+var CategoryServices = /** @class */ (function (_super) {
+    __extends(CategoryServices, _super);
     function CategoryServices() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     CategoryServices.prototype.saveCategory = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
@@ -60,10 +78,10 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, categoryModel.save()];
                     case 2:
                         savedCategory = _a.sent();
-                        res.json(savedCategory);
+                        this.sendResponse(savedCategory, res);
                         return [3 /*break*/, 4];
                     case 3:
-                        res.json({ message: isValidCategory });
+                        this.sendValidationError(isValidCategory, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -86,13 +104,13 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 2:
                         category = _a.sent();
-                        if (!(category === null)) return [3 /*break*/, 3];
+                        if (!!category) return [3 /*break*/, 3];
                         res.json({ message: messages_1.messages.category_not_found });
                         return [3 /*break*/, 5];
                     case 3: return [4 /*yield*/, category_1.Category.updateOne(category, newCategory)];
                     case 4:
                         _a.sent();
-                        res.json(newCategory);
+                        this.sendResponse(newCategory, res);
                         _a.label = 5;
                     case 5: return [3 /*break*/, 7];
                     case 6:
@@ -113,13 +131,13 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 1:
                         category = _a.sent();
-                        if (!(category === null)) return [3 /*break*/, 2];
+                        if (!!category) return [3 /*break*/, 2];
                         res.json({ message: messages_1.messages.category_not_found });
                         return [3 /*break*/, 4];
                     case 2: return [4 /*yield*/, category_1.Category.deleteOne(category)];
                     case 3:
                         _a.sent();
-                        res.json(category);
+                        this.sendResponse(category, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -136,11 +154,12 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 1:
                         category = _a.sent();
-                        if (category === null) {
+                        console.log(category);
+                        if (!category) {
                             res.json({ message: messages_1.messages.category_not_found });
                         }
                         else {
-                            res.json(category);
+                            this.test();
                         }
                         return [2 /*return*/];
                 }
@@ -157,23 +176,28 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 1:
                         categoryToUpdate = _a.sent();
+                        if (!!categoryToUpdate) return [3 /*break*/, 2];
+                        res.json({ message: messages_1.messages.category_not_found });
+                        return [3 /*break*/, 4];
+                    case 2:
                         newCategory = req.body;
                         tempCategory = JSON.parse(JSON.stringify(categoryToUpdate));
                         for (p in tempCategory) {
                             newCategory[p] = newCategory[p] ? newCategory[p] : tempCategory[p];
                         }
                         return [4 /*yield*/, category_1.Category.updateOne(categoryToUpdate, newCategory)];
-                    case 2:
+                    case 3:
                         _a.sent();
-                        res.json(newCategory);
-                        return [2 /*return*/];
+                        this.sendResponse(newCategory, res);
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
     CategoryServices.prototype.searchCategory = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var searchParams, sort, result;
+            var searchParams, sort, searchResults;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -182,13 +206,13 @@ var CategoryServices = /** @class */ (function () {
                         return [4 /*yield*/, category_1.Category.find({ $and: [{ 'name': searchParams.name }, { 'active': searchParams.active }] }).
                                 limit(searchParams.limit).skip(searchParams.offset).sort(sort + searchParams.order.order_by)];
                     case 1:
-                        result = _a.sent();
-                        res.json(result);
+                        searchResults = _a.sent();
+                        this.sendResponse(searchResults, res);
                         return [2 /*return*/];
                 }
             });
         });
     };
     return CategoryServices;
-}());
+}(services_base_1.BaseServices));
 exports.CategoryServices = CategoryServices;
