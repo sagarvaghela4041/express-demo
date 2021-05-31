@@ -5,7 +5,7 @@
   "scripts": {
     "start": "tsc && node src/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "lint": "eslint .",  
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "keywords": [],
