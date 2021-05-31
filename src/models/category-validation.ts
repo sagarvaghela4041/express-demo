@@ -3,7 +3,7 @@ import { IsBoolean, IsString, Length } from 'class-validator';
 export class CategoryDTO {
 
     @IsString()
-    @Length(4,20)
+    @Length(4, 20)
     name: string;
 
     @IsBoolean()
@@ -12,7 +12,7 @@ export class CategoryDTO {
     @IsString()
     image: string;
 
-    constructor(category: CategoryDTO){
+    constructor(category: CategoryDTO) {
         this.name = category.name;
         this.active = category.active;
         this.image = category.image;

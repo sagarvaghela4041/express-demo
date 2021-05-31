@@ -64,26 +64,17 @@ var CategoryServices = /** @class */ (function (_super) {
     }
     CategoryServices.prototype.saveCategory = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newCategory, validationServices, isValidCategory, categoryModel, savedCategory;
+            var newCategory, validationServices, isValidCategory;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         newCategory = new category_validation_1.CategoryDTO(req.body);
                         validationServices = new validation_service_1.ValidationServices();
-                        return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
+                        return [4 /*yield*/, validationServices.validateDTO(category_validation_1.CategoryDTO, req.body)];
                     case 1:
                         isValidCategory = _a.sent();
-                        if (!!isValidCategory) return [3 /*break*/, 3];
-                        categoryModel = new category_1.Category(req.body);
-                        return [4 /*yield*/, categoryModel.save()];
-                    case 2:
-                        savedCategory = _a.sent();
-                        this.sendResponse(savedCategory, res);
-                        return [3 /*break*/, 4];
-                    case 3:
-                        this.sendValidationError(isValidCategory, res);
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        console.log(isValidCategory);
+                        return [2 /*return*/];
                 }
             });
         });
@@ -105,16 +96,16 @@ var CategoryServices = /** @class */ (function (_super) {
                     case 2:
                         category = _a.sent();
                         if (!!category) return [3 /*break*/, 3];
-                        res.json({ message: messages_1.messages.category_not_found });
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         return [3 /*break*/, 5];
                     case 3: return [4 /*yield*/, category_1.Category.updateOne(category, newCategory)];
                     case 4:
                         _a.sent();
-                        this.sendResponse(newCategory, res);
+                        _super.prototype.sendResponse.call(this, newCategory, res);
                         _a.label = 5;
                     case 5: return [3 /*break*/, 7];
                     case 6:
-                        res.json({ message: isValidCategory });
+                        _super.prototype.sendValidationError.call(this, { message: isValidCategory }, res);
                         _a.label = 7;
                     case 7: return [2 /*return*/];
                 }
@@ -132,12 +123,12 @@ var CategoryServices = /** @class */ (function (_super) {
                     case 1:
                         category = _a.sent();
                         if (!!category) return [3 /*break*/, 2];
-                        res.json({ message: messages_1.messages.category_not_found });
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         return [3 /*break*/, 4];
                     case 2: return [4 /*yield*/, category_1.Category.deleteOne(category)];
                     case 3:
                         _a.sent();
-                        this.sendResponse(category, res);
+                        _super.prototype.sendResponse.call(this, category, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -154,12 +145,11 @@ var CategoryServices = /** @class */ (function (_super) {
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 1:
                         category = _a.sent();
-                        console.log(category);
                         if (!category) {
-                            res.json({ message: messages_1.messages.category_not_found });
+                            _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         }
                         else {
-                            this.test();
+                            _super.prototype.sendResponse.call(this, category, res);
                         }
                         return [2 /*return*/];
                 }
@@ -177,7 +167,7 @@ var CategoryServices = /** @class */ (function (_super) {
                     case 1:
                         categoryToUpdate = _a.sent();
                         if (!!categoryToUpdate) return [3 /*break*/, 2];
-                        res.json({ message: messages_1.messages.category_not_found });
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
                         return [3 /*break*/, 4];
                     case 2:
                         newCategory = req.body;
@@ -188,7 +178,7 @@ var CategoryServices = /** @class */ (function (_super) {
                         return [4 /*yield*/, category_1.Category.updateOne(categoryToUpdate, newCategory)];
                     case 3:
                         _a.sent();
-                        this.sendResponse(newCategory, res);
+                        _super.prototype.sendResponse.call(this, newCategory, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -204,10 +194,10 @@ var CategoryServices = /** @class */ (function (_super) {
                         searchParams = req.body;
                         sort = searchParams.order.direction === 'asc' ? '' : '-';
                         return [4 /*yield*/, category_1.Category.find({ $and: [{ 'name': searchParams.name }, { 'active': searchParams.active }] }).
-                                limit(searchParams.limit).skip(searchParams.offset).sort(sort + searchParams.order.order_by)];
+                                limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
                     case 1:
                         searchResults = _a.sent();
-                        this.sendResponse(searchResults, res);
+                        _super.prototype.sendResponse.call(this, searchResults, res);
                         return [2 /*return*/];
                 }
             });

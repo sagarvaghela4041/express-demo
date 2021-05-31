@@ -1,6 +1,8 @@
+import 'reflect-metadata';
 import { validate, ValidationError } from "class-validator";
 import { CategoryDTO } from "../models/category-validation";
 import { RegistraionDTO } from "../models/user-validation";
+import { plainToClass } from 'class-transformer';
 
 export class ValidationServices {
 
@@ -11,18 +13,18 @@ export class ValidationServices {
             return this.createResponse(isValidUser);
         }
     }
-    
+
     async validateCredentials(user: RegistraionDTO) {
-    
+
         const isValid = await validate(user, { groups: ['credentials'] });
         if (isValid.length > 0) {
             return this.createResponse(isValid);
         }
     }
-    
-    createResponse(validationErrors:ValidationError[]){
+
+    createResponse(validationErrors: ValidationError[]) {
         const response = [];
-        for(const validationError of validationErrors){
+        for (const validationError of validationErrors) {
             const error = {
                 property: validationError.property,
                 constraints: validationError.constraints
@@ -32,11 +34,18 @@ export class ValidationServices {
         return response;
     }
 
-    
+
     async validateCategoryDTO(category: CategoryDTO) {
         const isValidCategory = await validate(category);
         if (isValidCategory.length > 0) {
             return this.createResponse(isValidCategory);
+        }
+    }
+
+    async validateDTO(object: CategoryDTO) {
+        const isValidDTO = await validate(plainToClass(CategoryDTO, object));
+        if (isValidDTO.length > 0) {
+            return this.createResponse(isValidDTO);
         }
     }
 

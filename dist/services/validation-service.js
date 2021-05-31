@@ -37,7 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidationServices = void 0;
+require("reflect-metadata");
 var class_validator_1 = require("class-validator");
+var class_transformer_1 = require("class-transformer");
 var ValidationServices = /** @class */ (function () {
     function ValidationServices() {
     }
@@ -95,6 +97,22 @@ var ValidationServices = /** @class */ (function () {
                         isValidCategory = _a.sent();
                         if (isValidCategory.length > 0) {
                             return [2 /*return*/, this.createResponse(isValidCategory)];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ValidationServices.prototype.validateDTO = function (type, object) {
+        return __awaiter(this, void 0, void 0, function () {
+            var isValidDTO;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, class_validator_1.validate(class_transformer_1.plainToClass(type, object))];
+                    case 1:
+                        isValidDTO = _a.sent();
+                        if (isValidDTO.length > 0) {
+                            return [2 /*return*/, this.createResponse(isValidDTO)];
                         }
                         return [2 /*return*/];
                 }
