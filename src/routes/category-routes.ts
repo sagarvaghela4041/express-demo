@@ -1,20 +1,21 @@
 import { Router } from 'express';
+import { authentication } from '../middlewares/user-authentication';
 import { CategoryServices } from '../services/category-service';
 
 const categoryRouter = Router();
 
 const categoryServices = new CategoryServices();
 
-categoryRouter.post('', categoryServices.saveCategory);
+categoryRouter.post('', authentication, categoryServices.saveCategory);
 
-categoryRouter.put('/:id', categoryServices.updateFullCategory);
+categoryRouter.put('/:id', authentication, categoryServices.updateFullCategory);
 
-categoryRouter.delete('/:id', categoryServices.deleteCategory);
+categoryRouter.delete('/:id', authentication, categoryServices.deleteCategory);
 
-categoryRouter.get('/:id', categoryServices.getCategory);
+categoryRouter.get('/:id', authentication, categoryServices.getCategory);
 
-categoryRouter.patch('/:id', categoryServices.updateCategory);
+categoryRouter.patch('/:id', authentication, categoryServices.updateCategory);
 
-categoryRouter.post('/search', categoryServices.searchCategory);
+categoryRouter.post('/search', authentication, categoryServices.searchCategory);
 
 export { categoryRouter }

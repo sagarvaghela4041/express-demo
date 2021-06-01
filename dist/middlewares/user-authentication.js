@@ -40,44 +40,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authentication = void 0;
-var messages_1 = require("../constants/messages");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var user_1 = require("../entitymodels/user");
-var user_validation_1 = require("../models/user-validation");
-var validation_service_1 = require("../services/validation-service");
+var messages_1 = require("../constants/messages");
 function authentication(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var user, validationServices, validationErrors, userCheck, varifiedUser;
+        var token, verifiedUser;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    user = new user_validation_1.RegistraionDTO(req.body);
-                    validationServices = new validation_service_1.ValidationServices();
-                    return [4 /*yield*/, validationServices.validateCredentials(user)];
-                case 1:
-                    validationErrors = _a.sent();
-                    if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
-                case 2:
-                    userCheck = _a.sent();
-                    if (!userCheck) {
-                        res.json({ message: messages_1.messages.invalid_credentailss });
-                    }
-                    else {
-                        varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
-                        if (userCheck._id === varifiedUser.id) {
-                            next();
-                        }
-                        else {
-                            res.json({ message: messages_1.messages.token_not_matched });
-                        }
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    res.json({ message: validationErrors });
-                    _a.label = 4;
-                case 4: return [2 /*return*/];
+            token = req.header('token');
+            verifiedUser = jsonwebtoken_1.default.verify(token, "" + process.env.PRIVATE_KEY);
+            if (verifiedUser.id) {
+                next();
             }
+            else {
+                res.json(messages_1.messages.token_not_matched);
+            }
+            return [2 /*return*/];
         });
     });
 }

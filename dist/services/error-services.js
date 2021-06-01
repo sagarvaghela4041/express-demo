@@ -67,7 +67,7 @@ var ErrorServices = /** @class */ (function (_super) {
                     case 0:
                         searchParams = req.body;
                         sort = searchParams.order.direction === 'asc' ? '' : '-';
-                        return [4 /*yield*/, error_1.ErrorLog.find({ $and: [{ error_name: searchParams.name }, { error_message: searchParams.message }] }).
+                        return [4 /*yield*/, error_1.ErrorLog.find({ $or: [{ error_name: searchParams.error_name }, { error_message: searchParams.message }] }).
                                 limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
                     case 1:
                         searchResults = _a.sent();

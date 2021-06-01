@@ -6,4 +6,4 @@ var error_services_1 = require("../services/error-services");
 var errorRouter = express_1.Router();
 exports.errorRouter = errorRouter;
 var errorServices = new error_services_1.ErrorServices();
-errorRouter.post('', errorServices.searchErrors);
+errorRouter.post('/errors', errorServices.searchErrors);

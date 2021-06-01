@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ErrorLog } from "../entitymodels/error";
 
 
-export async function errorHandler(err: Error, req: Request, res: Response): Promise<void> {
+export async function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): Promise<void> {
   console.log("You must print");
   const error = new ErrorLog();
   error.error_name = err.name;

@@ -194,7 +194,7 @@ var CategoryServices = /** @class */ (function (_super) {
             });
         });
     };
-    CategoryServices.prototype.searchCategory = function (req, res) {
+    CategoryServices.prototype.searchCategory = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var searchParams, sort, searchResults;
             return __generator(this, function (_a) {
