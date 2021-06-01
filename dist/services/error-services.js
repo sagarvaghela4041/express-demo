@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,50 +50,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authentication = void 0;
-var messages_1 = require("../constants/messages");
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var user_1 = require("../entitymodels/user");
-var user_validation_1 = require("../models/user-validation");
-var validation_service_1 = require("../services/validation-service");
-function authentication(req, res, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var user, validationServices, validationErrors, userCheck, varifiedUser;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    user = new user_validation_1.RegistraionDTO(req.body);
-                    validationServices = new validation_service_1.ValidationServices();
-                    return [4 /*yield*/, validationServices.validateCredentials(user)];
-                case 1:
-                    validationErrors = _a.sent();
-                    if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
-                case 2:
-                    userCheck = _a.sent();
-                    if (!userCheck) {
-                        res.json({ message: messages_1.messages.invalid_credentailss });
-                    }
-                    else {
-                        varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
-                        if (userCheck._id === varifiedUser.id) {
-                            next();
-                        }
-                        else {
-                            res.json({ message: messages_1.messages.token_not_matched });
-                        }
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    res.json({ message: validationErrors });
-                    _a.label = 4;
-                case 4: return [2 /*return*/];
-            }
+exports.ErrorServices = void 0;
+var error_1 = require("../entitymodels/error");
+var services_base_1 = require("./services-base");
+var ErrorServices = /** @class */ (function (_super) {
+    __extends(ErrorServices, _super);
+    function ErrorServices() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ErrorServices.prototype.searchErrors = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var searchParams, sort, searchResults;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        searchParams = req.body;
+                        sort = searchParams.order.direction === 'asc' ? '' : '-';
+                        return [4 /*yield*/, error_1.ErrorLog.find({ $and: [{ error_name: searchParams.name }, { error_message: searchParams.message }] }).
+                                limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
+                    case 1:
+                        searchResults = _a.sent();
+                        _super.prototype.sendResponse.call(this, searchResults, res);
+                        return [2 /*return*/];
+                }
+            });
         });
-    });
-}
-exports.authentication = authentication;
+    };
+    return ErrorServices;
+}(services_base_1.BaseServices));
+exports.ErrorServices = ErrorServices;

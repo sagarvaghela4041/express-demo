@@ -8,12 +8,12 @@ import { ValidationServices } from '../services/validation-service';
 export async function authentication(req: Request, res: Response, next: NextFunction): Promise<void> {
     const user = new RegistraionDTO(req.body);
     const validationServices = new ValidationServices();
-    const isValidUser = await validationServices.validateCredentials(user);
+    const validationErrors = await validationServices.validateCredentials(user);
 
-    if (!isValidUser) {
+    if (!validationErrors?.length) {
 
         const userCheck = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });
-        if (userCheck == null) {
+        if (!userCheck) {
             res.json({ message: messages.invalid_credentailss });
         }
         else {
@@ -30,6 +30,6 @@ export async function authentication(req: Request, res: Response, next: NextFunc
 
     }
     else {
-        res.json({ message: isValidUser });
+        res.json({ message: validationErrors });
     }
 }
