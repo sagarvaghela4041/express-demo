@@ -88,8 +88,24 @@ var ValidationServices = /** @class */ (function () {
                 constraints: validationError.constraints
             };
             response.push(error);
+            if (validationError.children) {
+                var r = this.createChildObjectErrorResponse(validationError.children);
+                response.push(r);
+            }
         }
         return response;
+    };
+    ValidationServices.prototype.createChildObjectErrorResponse = function (validationError) {
+        var childConstraints = [];
+        for (var _i = 0, validationError_1 = validationError; _i < validationError_1.length; _i++) {
+            var childConstraint = validationError_1[_i];
+            var childError = {
+                property: childConstraint.property,
+                constraint: childConstraint.constraints
+            };
+            childConstraints.push(childError);
+        }
+        return childConstraints;
     };
     ValidationServices.prototype.validateCategoryDTO = function (category) {
         return __awaiter(this, void 0, void 0, function () {
@@ -97,6 +113,25 @@ var ValidationServices = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, class_validator_1.validate(category)];
+                    case 1:
+                        validationErrors = _a.sent();
+                        if (validationErrors.length > 0) {
+                            return [2 /*return*/, this.createResponse(validationErrors)];
+                        }
+                        else {
+                            return [2 /*return*/, []];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ValidationServices.prototype.validateVendorDTO = function (vendor) {
+        return __awaiter(this, void 0, void 0, function () {
+            var validationErrors;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, class_validator_1.validate(vendor)];
                     case 1:
                         validationErrors = _a.sent();
                         if (validationErrors.length > 0) {

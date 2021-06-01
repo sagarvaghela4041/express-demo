@@ -7,8 +7,8 @@ import { errorHandler } from './middlewares/error-handler';
 import { categoryRouter } from './routes/category-routes';
 import { generalRouter } from './routes/routes';
 import { errorRouter } from './routes/error-routes';
+import { vendorRouter } from './routes/vendor-routes';
 dotenv.config();
-
 
 const app = express();
 database_connection();
@@ -17,7 +17,7 @@ app.use(router);
 app.use(errorRouter);
 app.use(generalRouter);
 app.use(categoryRouter);
+app.use(vendorRouter);
 app.use(errorHandler);
-
 
 app.listen(`${process.env.PORT}`, () => console.log(`Server started on port: ${process.env.PORT}`));

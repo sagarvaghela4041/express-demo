@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = void 0;
 var error_1 = require("../entitymodels/error");
-function errorHandler(err, req, res) {
+function errorHandler(err, req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var error;
         return __generator(this, function (_a) {
