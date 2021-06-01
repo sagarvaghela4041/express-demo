@@ -7,11 +7,11 @@ import { ValidationServices } from './validation-service';
 
 export class CategoryServices extends BaseServices {
 
-    async saveCategory(req: Request, res: Response) {
+    async saveCategory(req: Request, res: Response): Promise<void> {
         const newCategory = new CategoryDTO(req.body);
         const validationServices = new ValidationServices();
         const validationErrors = await validationServices.validateCategoryDTO(newCategory);
-        if (!validationErrors) {
+        if (!validationErrors?.length) {
 
             const categoryModel = new Category(req.body);
             const savedCategory = await categoryModel.save();
@@ -22,12 +22,12 @@ export class CategoryServices extends BaseServices {
         }
     }
 
-    async updateFullCategory(req: Request, res: Response) {
+    async updateFullCategory(req: Request, res: Response): Promise<void> {
         const newCategory = new CategoryDTO(req.body);
         const validationServices = new ValidationServices();
         const validationErrors = await validationServices.validateCategoryDTO(newCategory);
 
-        if (!validationErrors) {
+        if (!validationErrors?.length) {
 
             const id = req.params.id;
             const category = await Category.findById(id);
@@ -44,7 +44,7 @@ export class CategoryServices extends BaseServices {
         }
     }
 
-    async deleteCategory(req: Request, res: Response) {
+    async deleteCategory(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
         const category = await Category.findById(id);
         if (!category) {
@@ -56,7 +56,7 @@ export class CategoryServices extends BaseServices {
         }
     }
 
-    async getCategory(req: Request, res: Response) {
+    async getCategory(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
         const category = await Category.findById(id);
         if (!category) {
@@ -67,7 +67,7 @@ export class CategoryServices extends BaseServices {
         }
     }
 
-    async updateCategory(req: Request, res: Response) {
+    async updateCategory(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
         const categoryToUpdate = await Category.findById(id);
         if (!categoryToUpdate) {
@@ -85,11 +85,11 @@ export class CategoryServices extends BaseServices {
 
     }
 
-    async searchCategory(req: Request, res: Response) {
+    async searchCategory(req: Request, res: Response): Promise<void> {
 
         const searchParams = req.body;
         const sort = searchParams.order.direction === 'asc' ? '' : '-';
-        const searchResults = await Category.find({ $and: [{ 'name': searchParams.name }, { 'active': searchParams.active }] }).
+        const searchResults = await Category.find({ $and: [{ name: searchParams.name }, { active: searchParams.active }] }).
             limit(searchParams.limit).skip(searchParams.offset).sort(`${sort}${searchParams.order.order_by}`);
         super.sendResponse(searchResults, res);
 

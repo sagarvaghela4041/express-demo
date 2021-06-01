@@ -11,12 +11,12 @@ dotenv.config();
 export class UserServices {
 
 
-    async registration(req: Request, res: Response) {
+    async registration(req: Request, res: Response): Promise<void> {
 
         const newUser = new RegistraionDTO(req.body);
         const validationServices = new ValidationServices();
-        const isValidUser = await validationServices.validateUserDTO(newUser);
-        if (!isValidUser) {
+        const validationErrors = await validationServices.validateUserDTO(newUser);
+        if (!validationErrors?.length) {
 
 
             const userModel = new User(req.body);
@@ -30,20 +30,19 @@ export class UserServices {
 
         }
         else {
-            res.json({ message: isValidUser });
+            res.json({ message: validationErrors });
         }
 
     }
 
 
 
-    async login(req: Request, res: Response) {
+    async login(req: Request, res: Response): Promise<void> {
 
         const user = new RegistraionDTO(req.body);
         const validationServices = new ValidationServices();
-        const isValidUser = await validationServices.validateCredentials(user);
-
-        if (!isValidUser) {
+        const validationErrors = await validationServices.validateCredentials(user);
+        if (!validationErrors?.length) {
 
             const userCheck = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });
             if (userCheck === null) {
@@ -63,14 +62,14 @@ export class UserServices {
 
         }
         else {
-            res.json({ message: isValidUser });
+            res.json({ message: validationErrors });
         }
 
     }
 
 
 
-    async getUserDetails(req: Request, res: Response) {
+    async getUserDetails(req: Request, res: Response): Promise<void> {
 
         const user = new RegistraionDTO(req.body);
         const userDetails = await User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] });

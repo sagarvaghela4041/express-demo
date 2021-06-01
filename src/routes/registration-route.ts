@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import { authentication } from '../middlewares/user-authentication';
 import { UserServices } from '../services/user-services';
 

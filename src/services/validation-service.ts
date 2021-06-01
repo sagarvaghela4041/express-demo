@@ -4,23 +4,29 @@ import { RegistraionDTO } from "../models/user-validation";
 
 export class ValidationServices {
 
-    async validateUserDTO(user: RegistraionDTO) {
+    async validateUserDTO(user: RegistraionDTO): Promise<ValidationError[]> {
 
-        const isValidUser = await validate(user);
-        if (isValidUser.length > 0) {
-            return this.createResponse(isValidUser);
+        const validationErrors = await validate(user);
+        if (validationErrors.length > 0) {
+            return this.createResponse(validationErrors);
+        }
+        else {
+            return [];
         }
     }
 
-    async validateCredentials(user: RegistraionDTO) {
+    async validateCredentials(user: RegistraionDTO): Promise<ValidationError[]> {
 
-        const isValid = await validate(user, { groups: ['credentials'] });
-        if (isValid.length > 0) {
-            return this.createResponse(isValid);
+        const validationErrors = await validate(user, { groups: ['credentials'] });
+        if (validationErrors.length > 0) {
+            return this.createResponse(validationErrors);
+        }
+        else {
+            return [];
         }
     }
 
-    createResponse(validationErrors: ValidationError[]) {
+    createResponse(validationErrors: ValidationError[]): ValidationError[] {
         const response = [];
         for (const validationError of validationErrors) {
             const error = {
@@ -33,10 +39,13 @@ export class ValidationServices {
     }
 
 
-    async validateCategoryDTO(category: CategoryDTO) {
-        const isValidCategory = await validate(category);
-        if (isValidCategory.length > 0) {
-            return this.createResponse(isValidCategory);
+    async validateCategoryDTO(category: CategoryDTO): Promise<ValidationError[]> {
+        const validationErrors = await validate(category);
+        if (validationErrors.length > 0) {
+            return this.createResponse(validationErrors);
+        }
+        else {
+            return [];
         }
     }
 

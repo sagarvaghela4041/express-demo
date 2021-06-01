@@ -71,7 +71,7 @@ var UserServices = /** @class */ (function () {
     }
     UserServices.prototype.registration = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newUser, validationServices, isValidUser, userModel, token, registeredUser;
+            var newUser, validationServices, validationErrors, userModel, token, registeredUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -79,8 +79,8 @@ var UserServices = /** @class */ (function () {
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateUserDTO(newUser)];
                     case 1:
-                        isValidUser = _a.sent();
-                        if (!!isValidUser) return [3 /*break*/, 3];
+                        validationErrors = _a.sent();
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
                         userModel = new user_1.User(req.body);
                         token = jsonwebtoken_1.default.sign({ id: userModel._id }, "" + process.env.PRIVATE_KEY);
                         userModel.token = token;
@@ -90,7 +90,7 @@ var UserServices = /** @class */ (function () {
                         res.json(registeredUser);
                         return [3 /*break*/, 4];
                     case 3:
-                        res.json({ message: isValidUser });
+                        res.json({ message: validationErrors });
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
@@ -99,7 +99,7 @@ var UserServices = /** @class */ (function () {
     };
     UserServices.prototype.login = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, validationServices, isValidUser, userCheck, varifiedUser;
+            var user, validationServices, validationErrors, userCheck, varifiedUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -107,8 +107,8 @@ var UserServices = /** @class */ (function () {
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateCredentials(user)];
                     case 1:
-                        isValidUser = _a.sent();
-                        if (!!isValidUser) return [3 /*break*/, 3];
+                        validationErrors = _a.sent();
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
                         return [4 /*yield*/, user_1.User.findOne({ '$and': [{ user_name: user.user_name }, { password: user.password }] })];
                     case 2:
                         userCheck = _a.sent();
@@ -126,7 +126,7 @@ var UserServices = /** @class */ (function () {
                         }
                         return [3 /*break*/, 4];
                     case 3:
-                        res.json({ message: isValidUser });
+                        res.json({ message: validationErrors });
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }

@@ -43,14 +43,17 @@ var ValidationServices = /** @class */ (function () {
     }
     ValidationServices.prototype.validateUserDTO = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var isValidUser;
+            var validationErrors;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, class_validator_1.validate(user)];
                     case 1:
-                        isValidUser = _a.sent();
-                        if (isValidUser.length > 0) {
-                            return [2 /*return*/, this.createResponse(isValidUser)];
+                        validationErrors = _a.sent();
+                        if (validationErrors.length > 0) {
+                            return [2 /*return*/, this.createResponse(validationErrors)];
+                        }
+                        else {
+                            return [2 /*return*/, []];
                         }
                         return [2 /*return*/];
                 }
@@ -59,14 +62,17 @@ var ValidationServices = /** @class */ (function () {
     };
     ValidationServices.prototype.validateCredentials = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var isValid;
+            var validationErrors;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, class_validator_1.validate(user, { groups: ['credentials'] })];
                     case 1:
-                        isValid = _a.sent();
-                        if (isValid.length > 0) {
-                            return [2 /*return*/, this.createResponse(isValid)];
+                        validationErrors = _a.sent();
+                        if (validationErrors.length > 0) {
+                            return [2 /*return*/, this.createResponse(validationErrors)];
+                        }
+                        else {
+                            return [2 /*return*/, []];
                         }
                         return [2 /*return*/];
                 }
@@ -87,14 +93,17 @@ var ValidationServices = /** @class */ (function () {
     };
     ValidationServices.prototype.validateCategoryDTO = function (category) {
         return __awaiter(this, void 0, void 0, function () {
-            var isValidCategory;
+            var validationErrors;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, class_validator_1.validate(category)];
                     case 1:
-                        isValidCategory = _a.sent();
-                        if (isValidCategory.length > 0) {
-                            return [2 /*return*/, this.createResponse(isValidCategory)];
+                        validationErrors = _a.sent();
+                        if (validationErrors.length > 0) {
+                            return [2 /*return*/, this.createResponse(validationErrors)];
+                        }
+                        else {
+                            return [2 /*return*/, []];
                         }
                         return [2 /*return*/];
                 }

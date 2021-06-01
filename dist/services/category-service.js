@@ -73,7 +73,7 @@ var CategoryServices = /** @class */ (function (_super) {
                         return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
                     case 1:
                         validationErrors = _a.sent();
-                        if (!!validationErrors) return [3 /*break*/, 3];
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
                         categoryModel = new category_1.Category(req.body);
                         return [4 /*yield*/, categoryModel.save()];
                     case 2:
@@ -99,7 +99,7 @@ var CategoryServices = /** @class */ (function (_super) {
                         return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
                     case 1:
                         validationErrors = _a.sent();
-                        if (!!validationErrors) return [3 /*break*/, 6];
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 6];
                         id = req.params.id;
                         return [4 /*yield*/, category_1.Category.findById(id)];
                     case 2:
@@ -202,7 +202,7 @@ var CategoryServices = /** @class */ (function (_super) {
                     case 0:
                         searchParams = req.body;
                         sort = searchParams.order.direction === 'asc' ? '' : '-';
-                        return [4 /*yield*/, category_1.Category.find({ $and: [{ 'name': searchParams.name }, { 'active': searchParams.active }] }).
+                        return [4 /*yield*/, category_1.Category.find({ $and: [{ name: searchParams.name }, { active: searchParams.active }] }).
                                 limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
                     case 1:
                         searchResults = _a.sent();

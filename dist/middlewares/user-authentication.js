@@ -65,7 +65,7 @@ function authentication(req, res, next) {
                     }
                     else {
                         varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
-                        if (userCheck._id == varifiedUser.id) {
+                        if (userCheck._id === varifiedUser.id) {
                             next();
                         }
                         else {
