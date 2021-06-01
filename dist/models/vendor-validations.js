@@ -10,8 +10,8 @@ exports.VendorDTO = exports.AddressDTO = void 0;
 var class_validator_1 = require("class-validator");
 var AddressDTO = /** @class */ (function () {
     function AddressDTO(address) {
-        this.line1 = address.line1;
-        this.line2 = address.line2;
+        this.line_1 = address.line_1;
+        this.line_2 = address.line_2;
         this.city = address.city;
         this.state = address.state;
         this.zip = address.zip;
@@ -19,11 +19,11 @@ var AddressDTO = /** @class */ (function () {
     __decorate([
         class_validator_1.IsString(),
         class_validator_1.Length(4, 20)
-    ], AddressDTO.prototype, "line1", void 0);
+    ], AddressDTO.prototype, "line_1", void 0);
     __decorate([
         class_validator_1.IsString(),
         class_validator_1.Length(4, 20)
-    ], AddressDTO.prototype, "line2", void 0);
+    ], AddressDTO.prototype, "line_2", void 0);
     __decorate([
         class_validator_1.IsString(),
         class_validator_1.Length(4, 20)

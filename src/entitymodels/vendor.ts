@@ -5,8 +5,8 @@ export interface IVendor extends Document {
     email: string;
     phone_number: string;
     address: {
-        line1: string,
-        iine2: string,
+        line_1: string,
+        line_2: string,
         state: string,
         city: string,
         zip: string
@@ -17,8 +17,8 @@ const VendorModel: Schema = new Schema({
     email: String,
     phone_number: String,
     address: {
-        line1: String,
-        line2: String,
+        line_1: String,
+        line_2: String,
         state: String,
         city: String,
         zip: String

@@ -7,8 +7,8 @@ var VendorModel = new mongoose_1.Schema({
     email: String,
     phone_number: String,
     address: {
-        line1: String,
-        line2: String,
+        line_1: String,
+        line_2: String,
         state: String,
         city: String,
         zip: String

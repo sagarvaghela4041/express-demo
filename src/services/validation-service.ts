@@ -43,7 +43,7 @@ export class ValidationServices {
         return response;
     }
 
-    createChildObjectErrorResponse(validationError: ValidationError[]) {
+    createChildObjectErrorResponse(validationError: ValidationError[]): { property: string, constraint: any }[] {
         const childConstraints = [];
         for (const childConstraint of validationError) {
             const childError = {

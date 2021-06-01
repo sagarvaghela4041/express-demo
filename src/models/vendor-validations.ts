@@ -3,11 +3,11 @@ import { IsEmail, IsPhoneNumber, IsString, Length, ValidateNested } from 'class-
 export class AddressDTO {
     @IsString()
     @Length(4, 20)
-    line1: string;
+    line_1: string;
 
     @IsString()
     @Length(4, 20)
-    line2: string;
+    line_2: string;
 
     @IsString()
     @Length(4, 20)
@@ -22,8 +22,8 @@ export class AddressDTO {
     zip: string;
 
     constructor(address: AddressDTO) {
-        this.line1 = address.line1;
-        this.line2 = address.line2;
+        this.line_1 = address.line_1;
+        this.line_2 = address.line_2;
         this.city = address.city;
         this.state = address.state;
         this.zip = address.zip;

@@ -56,6 +56,7 @@ var vendor_validations_1 = require("../models/vendor-validations");
 var services_base_1 = require("./services-base");
 var validation_service_1 = require("./validation-service");
 var vendor_1 = require("../entitymodels/vendor");
+var messages_1 = require("../constants/messages");
 var VendorServices = /** @class */ (function (_super) {
     __extends(VendorServices, _super);
     function VendorServices() {
@@ -63,7 +64,7 @@ var VendorServices = /** @class */ (function (_super) {
     }
     VendorServices.prototype.saveVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newVendor, newAddress, validationServices, validationErrors, vendorModel;
+            var newVendor, newAddress, validationServices, validationErrors, vendorModel, savedVendor;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -74,14 +75,142 @@ var VendorServices = /** @class */ (function (_super) {
                         return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
                     case 1:
                         validationErrors = _a.sent();
-                        if (!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) {
-                            vendorModel = new vendor_1.Vendor(req.body);
-                            // const savedVendor = await vendorModel.save();
-                            // super.sendResponse(savedVendor, res);
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
+                        vendorModel = new vendor_1.Vendor(req.body);
+                        return [4 /*yield*/, vendorModel.save()];
+                    case 2:
+                        savedVendor = _a.sent();
+                        _super.prototype.sendResponse.call(this, savedVendor, res);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        _super.prototype.sendValidationError.call(this, validationErrors, res);
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VendorServices.prototype.updateFullVendor = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var newVendor, newAddress, validationServices, validationErrors, id, vendor;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        newVendor = new vendor_validations_1.VendorDTO(req.body);
+                        newAddress = new vendor_validations_1.AddressDTO(newVendor.address);
+                        newVendor.address = newAddress;
+                        validationServices = new validation_service_1.ValidationServices();
+                        return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
+                    case 1:
+                        validationErrors = _a.sent();
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 6];
+                        id = req.params.id;
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
+                    case 2:
+                        vendor = _a.sent();
+                        if (!!vendor) return [3 /*break*/, 3];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
+                        return [3 /*break*/, 5];
+                    case 3: return [4 /*yield*/, vendor_1.Vendor.updateOne({ _id: id }, newVendor)];
+                    case 4:
+                        _a.sent();
+                        _super.prototype.sendResponse.call(this, newVendor, res);
+                        _a.label = 5;
+                    case 5: return [3 /*break*/, 7];
+                    case 6:
+                        _super.prototype.sendValidationError.call(this, { message: validationErrors }, res);
+                        _a.label = 7;
+                    case 7: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VendorServices.prototype.deleteVendor = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, vendor;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.params.id;
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
+                    case 1:
+                        vendor = _a.sent();
+                        if (!!vendor) return [3 /*break*/, 2];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, vendor_1.Vendor.deleteOne({ _id: id })];
+                    case 3:
+                        _a.sent();
+                        _super.prototype.sendResponse.call(this, vendor, res);
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VendorServices.prototype.getVendor = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, vendor;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.params.id;
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
+                    case 1:
+                        vendor = _a.sent();
+                        if (!vendor) {
+                            _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
                         }
                         else {
-                            _super.prototype.sendValidationError.call(this, validationErrors, res);
+                            _super.prototype.sendResponse.call(this, vendor, res);
                         }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VendorServices.prototype.updateVendor = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, vendorToUpdate, newVendor, tempVendor, p;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.params.id;
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
+                    case 1:
+                        vendorToUpdate = _a.sent();
+                        if (!!vendorToUpdate) return [3 /*break*/, 2];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
+                        return [3 /*break*/, 4];
+                    case 2:
+                        newVendor = req.body;
+                        tempVendor = JSON.parse(JSON.stringify(vendorToUpdate));
+                        for (p in tempVendor) {
+                            newVendor[p] = newVendor[p] ? newVendor[p] : tempVendor[p];
+                        }
+                        return [4 /*yield*/, vendor_1.Vendor.updateOne({ _id: id }, newVendor)];
+                    case 3:
+                        _a.sent();
+                        _super.prototype.sendResponse.call(this, newVendor, res);
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VendorServices.prototype.searchVendor = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var searchParams, sort, searchResults;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        searchParams = req.body;
+                        sort = searchParams.order.direction === 'asc' ? '' : '-';
+                        return [4 /*yield*/, vendor_1.Vendor.find({ $and: [{ name: searchParams.name }, { email: searchParams.email }] }).
+                                limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
+                    case 1:
+                        searchResults = _a.sent();
+                        _super.prototype.sendResponse.call(this, searchResults, res);
                         return [2 /*return*/];
                 }
             });

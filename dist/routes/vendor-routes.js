@@ -7,3 +7,8 @@ var vendorRouter = express_1.Router();
 exports.vendorRouter = vendorRouter;
 var vendorServices = new vendor_services_1.VendorServices();
 vendorRouter.post('', vendorServices.saveVendor);
+vendorRouter.put('/:id', vendorServices.updateFullVendor);
+vendorRouter.delete('/:id', vendorServices.deleteVendor);
+vendorRouter.get('/:id', vendorServices.getVendor);
+vendorRouter.patch('/:id', vendorServices.updateVendor);
+vendorRouter.post('/search/:id', vendorServices.searchVendor);
