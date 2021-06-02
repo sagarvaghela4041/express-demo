@@ -17,7 +17,7 @@ var CategoryFieldDTO = /** @class */ (function () {
     }
     __decorate([
         class_validator_1.IsString(),
-        class_validator_1.Length(4, 20)
+        class_validator_1.Length(1, 20)
     ], CategoryFieldDTO.prototype, "name", void 0);
     __decorate([
         class_validator_1.IsString({ each: true })

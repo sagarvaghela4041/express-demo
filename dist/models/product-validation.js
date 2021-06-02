@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PorductDTO = exports.ProductVendorDTO = void 0;
+exports.PorductDTO = exports.ProductFieldDTO = exports.ProductVendorDTO = void 0;
 require("reflect-metadata");
 var class_transformer_1 = require("class-transformer");
 var class_validator_1 = require("class-validator");
@@ -29,11 +29,28 @@ var ProductVendorDTO = /** @class */ (function () {
     return ProductVendorDTO;
 }());
 exports.ProductVendorDTO = ProductVendorDTO;
+var ProductFieldDTO = /** @class */ (function () {
+    function ProductFieldDTO(fields) {
+        this.name = fields.name;
+        this.value = fields.value;
+    }
+    __decorate([
+        class_validator_1.IsString(),
+        class_validator_1.Length(1, 20)
+    ], ProductFieldDTO.prototype, "name", void 0);
+    __decorate([
+        class_validator_1.IsString({ each: true })
+    ], ProductFieldDTO.prototype, "value", void 0);
+    return ProductFieldDTO;
+}());
+exports.ProductFieldDTO = ProductFieldDTO;
 var PorductDTO = /** @class */ (function () {
     function PorductDTO(product) {
         this.title = product.title;
         this.vendors = product.vendors.map(function (productVendor) { return new ProductVendorDTO(productVendor); });
         this.images = product.images;
+        this.category_id = product.category_id;
+        this.fields = product.fields.map(function (fields) { return new ProductFieldDTO(fields); });
     }
     __decorate([
         class_validator_1.IsString()
@@ -46,6 +63,13 @@ var PorductDTO = /** @class */ (function () {
         class_validator_1.IsArray(),
         class_validator_1.IsString({ each: true })
     ], PorductDTO.prototype, "images", void 0);
+    __decorate([
+        class_validator_1.IsString()
+    ], PorductDTO.prototype, "category_id", void 0);
+    __decorate([
+        class_validator_1.ValidateNested({ each: true }),
+        class_transformer_1.Type(function () { return ProductFieldDTO; })
+    ], PorductDTO.prototype, "fields", void 0);
     return PorductDTO;
 }());
 exports.PorductDTO = PorductDTO;

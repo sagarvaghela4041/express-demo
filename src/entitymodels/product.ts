@@ -10,6 +10,13 @@ export interface IProduct extends Document {
         }
     ];
     images: string[];
+    category_id: string;
+    fields: [
+        {
+            name: string,
+            value: string
+        }
+    ];
 }
 
 const ProductModel: Schema = new Schema({
@@ -21,7 +28,14 @@ const ProductModel: Schema = new Schema({
             delivery_area_zipcodes: [Number]
         }
     ],
-    images: [String]
+    images: [String],
+    category_id: String,
+    fields: [
+        {
+            name: String,
+            value: String
+        }
+    ]
 });
 
 export const Product = model<IProduct>('product', ProductModel);

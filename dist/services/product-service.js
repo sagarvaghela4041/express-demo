@@ -55,7 +55,7 @@ exports.ProductServices = void 0;
 var services_base_1 = require("./services-base");
 var product_validation_1 = require("../models/product-validation");
 var validation_service_1 = require("./validation-service");
-var product_1 = require("../entitymodels/product");
+var category_1 = require("../entitymodels/category");
 var ProductServices = /** @class */ (function (_super) {
     __extends(ProductServices, _super);
     function ProductServices() {
@@ -63,7 +63,7 @@ var ProductServices = /** @class */ (function (_super) {
     }
     ProductServices.prototype.saveProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newProduct, validationServices, validationErrors, productModel, savedProduct;
+            var newProduct, validationServices, validationErrors, category_fields, f;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -73,11 +73,12 @@ var ProductServices = /** @class */ (function (_super) {
                     case 1:
                         validationErrors = _a.sent();
                         if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
-                        productModel = new product_1.Product(req.body);
-                        return [4 /*yield*/, productModel.save()];
+                        return [4 /*yield*/, category_1.Category.findById(newProduct.category_id)];
                     case 2:
-                        savedProduct = _a.sent();
-                        this.sendResponse(savedProduct, res);
+                        category_fields = _a.sent();
+                        for (f in category_fields) {
+                            console.log(f);
+                        }
                         return [3 /*break*/, 4];
                     case 3:
                         this.sendValidationError(validationErrors, res);

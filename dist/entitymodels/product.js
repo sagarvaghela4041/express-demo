@@ -11,6 +11,13 @@ var ProductModel = new mongoose_1.Schema({
             delivery_area_zipcodes: [Number]
         }
     ],
-    images: [String]
+    images: [String],
+    category_id: String,
+    fields: [
+        {
+            name: String,
+            value: String
+        }
+    ]
 });
 exports.Product = mongoose_1.model('product', ProductModel);
