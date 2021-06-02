@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import { messages } from '../constants/messages';
 import { Category } from '../entitymodels/category';
 import { CategoryDTO } from '../models/category-validation';
-import { BaseServices } from './services-base';
+import { BaseService } from './services-base';
 import { ValidationServices } from './validation-service';
 
-export class CategoryServices extends BaseServices {
+export class CategoryServices extends BaseService {
 
     async saveCategory(req: Request, res: Response): Promise<void> {
         const newCategory = new CategoryDTO(req.body);

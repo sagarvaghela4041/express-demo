@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseServices = void 0;
-var BaseServices = /** @class */ (function () {
-    function BaseServices() {
+exports.BaseService = void 0;
+var BaseService = /** @class */ (function () {
+    function BaseService() {
     }
-    BaseServices.prototype.sendResponse = function (responseToSend, res) {
+    BaseService.prototype.sendResponse = function (responseToSend, res) {
         res.json(responseToSend);
     };
-    BaseServices.prototype.sendValidationError = function (errorToSend, res) {
+    BaseService.prototype.sendValidationError = function (errorToSend, res) {
         res.json(errorToSend);
     };
-    return BaseServices;
+    return BaseService;
 }());
-exports.BaseServices = BaseServices;
+exports.BaseService = BaseService;

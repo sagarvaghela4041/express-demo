@@ -88,5 +88,5 @@ var ProductServices = /** @class */ (function (_super) {
         });
     };
     return ProductServices;
-}(services_base_1.BaseServices));
+}(services_base_1.BaseService));
 exports.ProductServices = ProductServices;

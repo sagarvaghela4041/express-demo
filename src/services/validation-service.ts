@@ -2,7 +2,7 @@ import { validate, ValidationError } from "class-validator";
 import { CategoryDTO } from "../models/category-validation";
 import { PorductDTO } from "../models/product-validation";
 import { RegistraionDTO } from "../models/user-validation";
-import { VendorDTO } from "../models/vendor-validations";
+import { VendorDTO } from "../models/vendor-validation";
 
 export class ValidationServices {
 

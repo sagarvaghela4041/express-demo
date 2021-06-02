@@ -6,5 +6,3 @@ export const messages = {
     category_not_found: 'Category not found with provided id !',
     vendor_not_found: 'Vendor not found with provided id !'
 };
-
-export const categoryVersion = 'v1';

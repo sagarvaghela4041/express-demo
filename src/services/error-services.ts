@@ -1,8 +1,8 @@
 import { ErrorLog } from "../entitymodels/error";
-import { BaseServices } from "./services-base";
+import { BaseService } from "./services-base";
 import { Request, Response } from 'express';
 
-export class ErrorServices extends BaseServices {
+export class ErrorServices extends BaseService {
     async searchErrors(req: Request, res: Response): Promise<void> {
 
         const searchParams = req.body;

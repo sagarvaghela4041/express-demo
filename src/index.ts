@@ -1,7 +1,7 @@
 import express from 'express';
 import { database_connection } from './services/database-service';
 import { json } from 'body-parser';
-import { router } from './routes/registration-route';
+import { router } from './routes/registration-routes';
 import * as dotenv from "dotenv";
 import { errorHandler } from './middlewares/error-handler';
 import { categoryRouter } from './routes/category-routes';

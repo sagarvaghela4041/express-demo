@@ -78,5 +78,5 @@ var ErrorServices = /** @class */ (function (_super) {
         });
     };
     return ErrorServices;
-}(services_base_1.BaseServices));
+}(services_base_1.BaseService));
 exports.ErrorServices = ErrorServices;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.categoryVersion = exports.messages = void 0;
+exports.messages = void 0;
 exports.messages = {
     invalid_credentailss: 'Invalid Credentials !',
     valid_user: 'Valid user ! Welcome.',
@@ -8,4 +8,3 @@ exports.messages = {
     category_not_found: 'Category not found with provided id !',
     vendor_not_found: 'Vendor not found with provided id !'
 };
-exports.categoryVersion = 'v1';

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { categoryVersion } from '../constants/messages';
+import { categoryVersion } from '../constants/system-constants';
 import { categoryRouter } from './category-routes';
 import { productRouter } from './product-routes';
 import { vendorRouter } from './vendor-routes';

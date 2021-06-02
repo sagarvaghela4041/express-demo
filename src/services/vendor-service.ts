@@ -1,11 +1,11 @@
-import { AddressDTO, VendorDTO } from "../models/vendor-validations";
-import { BaseServices } from "./services-base";
+import { AddressDTO, VendorDTO } from "../models/vendor-validation";
+import { BaseService } from "./services-base";
 import { ValidationServices } from "./validation-service";
 import { Request, Response } from 'express';
 import { Vendor } from "../entitymodels/vendor";
 import { messages } from "../constants/messages";
 
-export class VendorServices extends BaseServices {
+export class VendorServices extends BaseService {
     async saveVendor(req: Request, res: Response): Promise<void> {
         const newVendor = new VendorDTO(req.body);
         const newAddress = new AddressDTO(newVendor.address);
@@ -38,7 +38,7 @@ export class VendorServices extends BaseServices {
                 super.sendValidationError({ message: messages.vendor_not_found }, res);
             }
             else {
-                await Vendor.updateOne({ _id: id }, newVendor as any);
+                await Vendor.updateOne({ _id: id }, newVendor);
                 super.sendResponse(newVendor, res);
             }
         }

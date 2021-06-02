@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-export class BaseServices {
+export class BaseService {
     sendResponse(responseToSend: unknown, res: Response): void {
         res.json(responseToSend);
     }

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authentication } from '../middlewares/user-authentication';
-import { VendorServices } from '../services/vendor-services';
+import { VendorServices } from '../services/vendor-service';
 
 const vendorRouter = Router();
 const vendorServices = new VendorServices();

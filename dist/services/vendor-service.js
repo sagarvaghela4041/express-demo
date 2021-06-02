@@ -51,34 +51,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryServices = void 0;
-var messages_1 = require("../constants/messages");
-var category_1 = require("../entitymodels/category");
-var category_validation_1 = require("../models/category-validation");
+exports.VendorServices = void 0;
+var vendor_validations_1 = require("../models/vendor-validations");
 var services_base_1 = require("./services-base");
 var validation_service_1 = require("./validation-service");
-var CategoryServices = /** @class */ (function (_super) {
-    __extends(CategoryServices, _super);
-    function CategoryServices() {
+var vendor_1 = require("../entitymodels/vendor");
+var messages_1 = require("../constants/messages");
+var VendorServices = /** @class */ (function (_super) {
+    __extends(VendorServices, _super);
+    function VendorServices() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    CategoryServices.prototype.saveCategory = function (req, res) {
+    VendorServices.prototype.saveVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newCategory, validationServices, validationErrors, categoryModel, savedCategory;
+            var newVendor, newAddress, validationServices, validationErrors, vendorModel, savedVendor;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        newCategory = new category_validation_1.CategoryDTO(req.body);
+                        newVendor = new vendor_validations_1.VendorDTO(req.body);
+                        newAddress = new vendor_validations_1.AddressDTO(newVendor.address);
+                        newVendor.address = newAddress;
                         validationServices = new validation_service_1.ValidationServices();
-                        return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
+                        return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
                     case 1:
                         validationErrors = _a.sent();
                         if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
-                        categoryModel = new category_1.Category(req.body);
-                        return [4 /*yield*/, categoryModel.save()];
+                        vendorModel = new vendor_1.Vendor(req.body);
+                        return [4 /*yield*/, vendorModel.save()];
                     case 2:
-                        savedCategory = _a.sent();
-                        _super.prototype.sendResponse.call(this, savedCategory, res);
+                        savedVendor = _a.sent();
+                        _super.prototype.sendResponse.call(this, savedVendor, res);
                         return [3 /*break*/, 4];
                     case 3:
                         _super.prototype.sendValidationError.call(this, validationErrors, res);
@@ -88,29 +90,31 @@ var CategoryServices = /** @class */ (function (_super) {
             });
         });
     };
-    CategoryServices.prototype.updateFullCategory = function (req, res) {
+    VendorServices.prototype.updateFullVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newCategory, validationServices, validationErrors, id, category;
+            var newVendor, newAddress, validationServices, validationErrors, id, vendor;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        newCategory = new category_validation_1.CategoryDTO(req.body);
+                        newVendor = new vendor_validations_1.VendorDTO(req.body);
+                        newAddress = new vendor_validations_1.AddressDTO(newVendor.address);
+                        newVendor.address = newAddress;
                         validationServices = new validation_service_1.ValidationServices();
-                        return [4 /*yield*/, validationServices.validateCategoryDTO(newCategory)];
+                        return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
                     case 1:
                         validationErrors = _a.sent();
                         if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 6];
                         id = req.params.id;
-                        return [4 /*yield*/, category_1.Category.findById(id)];
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
                     case 2:
-                        category = _a.sent();
-                        if (!!category) return [3 /*break*/, 3];
-                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
+                        vendor = _a.sent();
+                        if (!!vendor) return [3 /*break*/, 3];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
                         return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, category_1.Category.updateOne({ _id: id }, newCategory)];
+                    case 3: return [4 /*yield*/, vendor_1.Vendor.updateOne({ _id: id }, newVendor)];
                     case 4:
                         _a.sent();
-                        _super.prototype.sendResponse.call(this, newCategory, res);
+                        _super.prototype.sendResponse.call(this, newVendor, res);
                         _a.label = 5;
                     case 5: return [3 /*break*/, 7];
                     case 6:
@@ -121,80 +125,80 @@ var CategoryServices = /** @class */ (function (_super) {
             });
         });
     };
-    CategoryServices.prototype.deleteCategory = function (req, res) {
+    VendorServices.prototype.deleteVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, category;
+            var id, vendor;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        return [4 /*yield*/, category_1.Category.findById(id)];
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
                     case 1:
-                        category = _a.sent();
-                        if (!!category) return [3 /*break*/, 2];
-                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
+                        vendor = _a.sent();
+                        if (!!vendor) return [3 /*break*/, 2];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
                         return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, category_1.Category.deleteOne({ _id: id })];
+                    case 2: return [4 /*yield*/, vendor_1.Vendor.deleteOne({ _id: id })];
                     case 3:
                         _a.sent();
-                        _super.prototype.sendResponse.call(this, category, res);
+                        _super.prototype.sendResponse.call(this, vendor, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    CategoryServices.prototype.getCategory = function (req, res) {
+    VendorServices.prototype.getVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, category;
+            var id, vendor;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        return [4 /*yield*/, category_1.Category.findById(id)];
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
                     case 1:
-                        category = _a.sent();
-                        if (!category) {
-                            _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
+                        vendor = _a.sent();
+                        if (!vendor) {
+                            _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
                         }
                         else {
-                            _super.prototype.sendResponse.call(this, category, res);
+                            _super.prototype.sendResponse.call(this, vendor, res);
                         }
                         return [2 /*return*/];
                 }
             });
         });
     };
-    CategoryServices.prototype.updateCategory = function (req, res) {
+    VendorServices.prototype.updateVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, categoryToUpdate, newCategory, tempCategory, p;
+            var id, vendorToUpdate, newVendor, tempVendor, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        return [4 /*yield*/, category_1.Category.findById(id)];
+                        return [4 /*yield*/, vendor_1.Vendor.findById(id)];
                     case 1:
-                        categoryToUpdate = _a.sent();
-                        if (!!categoryToUpdate) return [3 /*break*/, 2];
-                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.category_not_found }, res);
+                        vendorToUpdate = _a.sent();
+                        if (!!vendorToUpdate) return [3 /*break*/, 2];
+                        _super.prototype.sendValidationError.call(this, { message: messages_1.messages.vendor_not_found }, res);
                         return [3 /*break*/, 4];
                     case 2:
-                        newCategory = req.body;
-                        tempCategory = JSON.parse(JSON.stringify(categoryToUpdate));
-                        for (p in tempCategory) {
-                            newCategory[p] = newCategory[p] ? newCategory[p] : tempCategory[p];
+                        newVendor = req.body;
+                        tempVendor = JSON.parse(JSON.stringify(vendorToUpdate));
+                        for (p in tempVendor) {
+                            newVendor[p] = newVendor[p] ? newVendor[p] : tempVendor[p];
                         }
-                        return [4 /*yield*/, category_1.Category.updateOne({ _id: id }, newCategory)];
+                        return [4 /*yield*/, vendor_1.Vendor.updateOne({ _id: id }, newVendor)];
                     case 3:
                         _a.sent();
-                        _super.prototype.sendResponse.call(this, newCategory, res);
+                        _super.prototype.sendResponse.call(this, newVendor, res);
                         _a.label = 4;
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    CategoryServices.prototype.searchCategory = function (req, res) {
+    VendorServices.prototype.searchVendor = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var searchParams, sort, searchResults;
             return __generator(this, function (_a) {
@@ -202,7 +206,7 @@ var CategoryServices = /** @class */ (function (_super) {
                     case 0:
                         searchParams = req.body;
                         sort = searchParams.order.direction === 'asc' ? '' : '-';
-                        return [4 /*yield*/, category_1.Category.find({ $and: [{ name: searchParams.name }, { active: searchParams.active }] }).
+                        return [4 /*yield*/, vendor_1.Vendor.find({ $and: [{ name: searchParams.name }, { email: searchParams.email }] }).
                                 limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
                     case 1:
                         searchResults = _a.sent();
@@ -212,6 +216,6 @@ var CategoryServices = /** @class */ (function (_super) {
             });
         });
     };
-    return CategoryServices;
+    return VendorServices;
 }(services_base_1.BaseService));
-exports.CategoryServices = CategoryServices;
+exports.VendorServices = VendorServices;

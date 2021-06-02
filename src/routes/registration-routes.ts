@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authentication } from '../middlewares/user-authentication';
-import { UserServices } from '../services/user-services';
+import { UserServices } from '../services/user-service';
 
 const router = Router();
 const userServices = new UserServices();
