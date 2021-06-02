@@ -89,8 +89,10 @@ var ValidationServices = /** @class */ (function () {
             };
             response.push(error);
             if (validationError.children) {
-                var r = this.createChildObjectErrorResponse(validationError.children);
-                response.push(r);
+                var errorFromChild = this.createChildObjectErrorResponse(validationError.children);
+                if (errorFromChild === null || errorFromChild === void 0 ? void 0 : errorFromChild.length) {
+                    response.push(errorFromChild);
+                }
             }
         }
         return response;
@@ -104,6 +106,12 @@ var ValidationServices = /** @class */ (function () {
                 constraint: childConstraint.constraints
             };
             childConstraints.push(childError);
+            if (childConstraint.children) {
+                var errorFromChild = this.createChildObjectErrorResponse(childConstraint.children);
+                if (errorFromChild === null || errorFromChild === void 0 ? void 0 : errorFromChild.length) {
+                    childConstraints.push(errorFromChild);
+                }
+            }
         }
         return childConstraints;
     };
@@ -132,6 +140,25 @@ var ValidationServices = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, class_validator_1.validate(vendor)];
+                    case 1:
+                        validationErrors = _a.sent();
+                        if (validationErrors.length > 0) {
+                            return [2 /*return*/, this.createResponse(validationErrors)];
+                        }
+                        else {
+                            return [2 /*return*/, []];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ValidationServices.prototype.validateProductDTO = function (product) {
+        return __awaiter(this, void 0, void 0, function () {
+            var validationErrors;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, class_validator_1.validate(product)];
                     case 1:
                         validationErrors = _a.sent();
                         if (validationErrors.length > 0) {

@@ -1,4 +1,4 @@
-import { IsEmail, IsPhoneNumber, IsString, Length, ValidateNested } from 'class-validator';
+import { IsEmail, IsString, Length, ValidateNested } from 'class-validator';
 
 export class AddressDTO {
     @IsString()

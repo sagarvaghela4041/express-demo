@@ -1,5 +1,6 @@
 import { validate, ValidationError } from "class-validator";
 import { CategoryDTO } from "../models/category-validation";
+import { PorductDTO } from "../models/product-validation";
 import { RegistraionDTO } from "../models/user-validation";
 import { VendorDTO } from "../models/vendor-validations";
 
@@ -36,8 +37,10 @@ export class ValidationServices {
             }
             response.push(error);
             if (validationError.children) {
-                const r = this.createChildObjectErrorResponse(validationError.children) as any;
-                response.push(r);
+                const errorFromChild = this.createChildObjectErrorResponse(validationError.children) as any;
+                if (errorFromChild?.length) {
+                    response.push(errorFromChild);
+                }
             }
         }
         return response;
@@ -51,6 +54,13 @@ export class ValidationServices {
                 constraint: childConstraint.constraints
             }
             childConstraints.push(childError);
+            if (childConstraint.children) {
+                const errorFromChild = this.createChildObjectErrorResponse(childConstraint.children) as any;
+                if (errorFromChild?.length) {
+                    childConstraints.push(errorFromChild);
+                }
+            }
+
         }
         return (childConstraints as { property: string, constraint: any }[]);
     }
@@ -76,6 +86,14 @@ export class ValidationServices {
         }
     }
 
-
+    async validateProductDTO(product: PorductDTO): Promise<ValidationError[]> {
+        const validationErrors = await validate(product);
+        if (validationErrors.length > 0) {
+            return this.createResponse(validationErrors);
+        }
+        else {
+            return [];
+        }
+    }
 
 }

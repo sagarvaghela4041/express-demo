@@ -85,7 +85,7 @@ export class CategoryServices extends BaseServices {
 
     }
 
-    async searchCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
+    async searchCategory(req: Request, res: Response): Promise<void> {
 
         const searchParams = req.body;
         const sort = searchParams.order.direction === 'asc' ? '' : '-';
