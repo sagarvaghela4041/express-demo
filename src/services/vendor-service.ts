@@ -88,7 +88,6 @@ export class VendorServices extends BaseService {
     }
 
     async searchVendor(req: Request, res: Response): Promise<void> {
-
         const searchParams = req.body;
         const sort = searchParams.order.direction === 'asc' ? '' : '-';
         const searchResults = await Vendor.find({ $and: [{ name: searchParams.name }, { email: searchParams.email }] }).

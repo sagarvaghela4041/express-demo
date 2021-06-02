@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+var express_1 = require("express");
+var user_authentication_1 = require("../middlewares/user-authentication");
+var user_service_1 = require("../services/user-service");
+var router = express_1.Router();
+exports.router = router;
+var userServices = new user_service_1.UserServices();
+router.post('/registration', userServices.registration);
+router.post('/login', userServices.login);
+router.post('/get-user-details', user_authentication_1.authentication, userServices.getUserDetails);

@@ -55,7 +55,7 @@ exports.ProductServices = void 0;
 var services_base_1 = require("./services-base");
 var product_validation_1 = require("../models/product-validation");
 var validation_service_1 = require("./validation-service");
-var products_1 = require("../entitymodels/products");
+var product_1 = require("../entitymodels/product");
 var ProductServices = /** @class */ (function (_super) {
     __extends(ProductServices, _super);
     function ProductServices() {
@@ -73,7 +73,7 @@ var ProductServices = /** @class */ (function (_super) {
                     case 1:
                         validationErrors = _a.sent();
                         if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
-                        productModel = new products_1.Product(req.body);
+                        productModel = new product_1.Product(req.body);
                         return [4 /*yield*/, productModel.save()];
                     case 2:
                         savedProduct = _a.sent();

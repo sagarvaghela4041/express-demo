@@ -52,7 +52,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VendorServices = void 0;
-var vendor_validations_1 = require("../models/vendor-validations");
+var vendor_validation_1 = require("../models/vendor-validation");
 var services_base_1 = require("./services-base");
 var validation_service_1 = require("./validation-service");
 var vendor_1 = require("../entitymodels/vendor");
@@ -68,8 +68,8 @@ var VendorServices = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        newVendor = new vendor_validations_1.VendorDTO(req.body);
-                        newAddress = new vendor_validations_1.AddressDTO(newVendor.address);
+                        newVendor = new vendor_validation_1.VendorDTO(req.body);
+                        newAddress = new vendor_validation_1.AddressDTO(newVendor.address);
                         newVendor.address = newAddress;
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
@@ -96,8 +96,8 @@ var VendorServices = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        newVendor = new vendor_validations_1.VendorDTO(req.body);
-                        newAddress = new vendor_validations_1.AddressDTO(newVendor.address);
+                        newVendor = new vendor_validation_1.VendorDTO(req.body);
+                        newAddress = new vendor_validation_1.AddressDTO(newVendor.address);
                         newVendor.address = newAddress;
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateVendorDTO(newVendor)];
