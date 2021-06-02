@@ -29,6 +29,12 @@ var CategoryModel = new mongoose_1.Schema({
         }
     },
     active: Boolean,
-    image: String
+    image: String,
+    fields: [
+        {
+            name: String,
+            values: [String]
+        }
+    ]
 });
 exports.Category = mongoose_1.default.model('category', CategoryModel);

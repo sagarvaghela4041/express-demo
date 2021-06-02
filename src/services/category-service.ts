@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { messages } from '../constants/messages';
 import { Category } from '../entitymodels/category';
 import { CategoryDTO } from '../models/category-validation';

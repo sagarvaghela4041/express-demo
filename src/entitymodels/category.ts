@@ -4,6 +4,12 @@ export interface ICategory extends Document {
     name: string;
     active: boolean;
     image: string;
+    fields: [
+        {
+            name: string,
+            values: string[]
+        }
+    ];
 }
 
 const CategoryModel: Schema = new Schema({
@@ -14,7 +20,13 @@ const CategoryModel: Schema = new Schema({
         }
     },
     active: Boolean,
-    image: String
+    image: String,
+    fields: [
+        {
+            name: String,
+            values: [String]
+        }
+    ]
 });
 
 export const Category = mongoose.model<ICategory>('category', CategoryModel);
