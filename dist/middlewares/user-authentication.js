@@ -47,12 +47,17 @@ function authentication(req, res, next) {
         var token, verifiedUser;
         return __generator(this, function (_a) {
             token = req.cookies.token;
-            verifiedUser = jsonwebtoken_1.default.verify(token, "" + process.env.PRIVATE_KEY);
-            if (verifiedUser.id) {
-                next();
+            if (token) {
+                verifiedUser = jsonwebtoken_1.default.verify(token, "" + process.env.PRIVATE_KEY);
+                if (verifiedUser.id) {
+                    next();
+                }
+                else {
+                    res.json(messages_1.messages.token_not_matched);
+                }
             }
             else {
-                res.json(messages_1.messages.token_not_matched);
+                res.json({ message: messages_1.messages.user_not_logged_in });
             }
             return [2 /*return*/];
         });

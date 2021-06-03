@@ -8,3 +8,4 @@ var productRouter = express_1.Router();
 exports.productRouter = productRouter;
 var productServices = new product_service_1.ProductServices();
 productRouter.post('', user_authentication_1.authentication, productServices.saveProduct);
+productRouter.post('/search', user_authentication_1.authentication, productServices.searchProduct);

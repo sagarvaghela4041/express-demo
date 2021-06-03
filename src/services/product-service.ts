@@ -45,4 +45,21 @@ export class ProductServices extends BaseService {
             super.sendValidationError(validationErrors, res);
         }
     }
+
+    async searchProduct(req: Request, res: Response): Promise<void> {
+
+        const searchParams = req.body;
+        const sort = searchParams.order.direction === 'asc' ? '' : '-';
+        const searchResults = await Product.find({
+            $and: [{ title: { $regex: searchParams.title, $options: 'i' } },
+            { vendors: { $elemMatch: { price: { $gte: searchParams.price_range?.[0], $lte: searchParams.price_range?.[1] } } } },
+            { vendors: { $elemMatch: { _id: searchParams.vendor_id } } },
+            { category_id: searchParams.category_id },
+            { fields: searchParams.fields }]
+        }).
+            limit(searchParams.limit).skip(searchParams.offset).sort(`${sort}${searchParams.order.order_by}`);
+        super.sendResponse(searchResults, res);
+
+    }
+
 }
