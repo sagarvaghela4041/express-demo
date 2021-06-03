@@ -1,7 +1,7 @@
 import { AddressDTO, VendorDTO } from "../models/vendor-validation";
 import { BaseService } from "./services-base";
 import { ValidationServices } from "./validation-service";
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Vendor } from "../entitymodels/vendor";
 import { messages } from "../constants/messages";
 

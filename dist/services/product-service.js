@@ -55,6 +55,7 @@ exports.ProductServices = void 0;
 var services_base_1 = require("./services-base");
 var product_validation_1 = require("../models/product-validation");
 var validation_service_1 = require("./validation-service");
+var product_1 = require("../entitymodels/product");
 var category_1 = require("../entitymodels/category");
 var ProductServices = /** @class */ (function (_super) {
     __extends(ProductServices, _super);
@@ -63,27 +64,64 @@ var ProductServices = /** @class */ (function (_super) {
     }
     ProductServices.prototype.saveProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var newProduct, validationServices, validationErrors, category_fields, f;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var newProduct, validationServices, validationErrors, category_fields, notProvidedFields, _loop_1, _i, _a, field, productModel, savedProduct;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         newProduct = new product_validation_1.PorductDTO(req.body);
                         validationServices = new validation_service_1.ValidationServices();
                         return [4 /*yield*/, validationServices.validateProductDTO(newProduct)];
                     case 1:
-                        validationErrors = _a.sent();
-                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 3];
+                        validationErrors = _b.sent();
+                        if (!!(validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length)) return [3 /*break*/, 6];
                         return [4 /*yield*/, category_1.Category.findById(newProduct.category_id)];
                     case 2:
-                        category_fields = _a.sent();
-                        for (f in category_fields) {
-                            console.log(f);
+                        category_fields = _b.sent();
+                        notProvidedFields = [];
+                        if (category_fields) {
+                            _loop_1 = function (field) {
+                                var nameFlag = false;
+                                var _loop_2 = function (value) {
+                                    var valueFlag = newProduct.fields.find(function (productField) {
+                                        if (productField.name === field.name && productField.value === value) {
+                                            return true;
+                                        }
+                                    });
+                                    if (valueFlag) {
+                                        nameFlag = true;
+                                        return "break";
+                                    }
+                                };
+                                for (var _c = 0, _d = field.values; _c < _d.length; _c++) {
+                                    var value = _d[_c];
+                                    var state_1 = _loop_2(value);
+                                    if (state_1 === "break")
+                                        break;
+                                }
+                                if (!nameFlag) {
+                                    notProvidedFields.push({ name: field.name });
+                                }
+                            };
+                            for (_i = 0, _a = category_fields.fields; _i < _a.length; _i++) {
+                                field = _a[_i];
+                                _loop_1(field);
+                            }
                         }
-                        return [3 /*break*/, 4];
+                        if (!!(notProvidedFields === null || notProvidedFields === void 0 ? void 0 : notProvidedFields.length)) return [3 /*break*/, 4];
+                        productModel = new product_1.Product(req.body);
+                        return [4 /*yield*/, productModel.save()];
                     case 3:
-                        this.sendValidationError(validationErrors, res);
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        savedProduct = _b.sent();
+                        _super.prototype.sendResponse.call(this, savedProduct, res);
+                        return [3 /*break*/, 5];
+                    case 4:
+                        _super.prototype.sendValidationError.call(this, notProvidedFields, res);
+                        _b.label = 5;
+                    case 5: return [3 /*break*/, 7];
+                    case 6:
+                        _super.prototype.sendValidationError.call(this, validationErrors, res);
+                        _b.label = 7;
+                    case 7: return [2 /*return*/];
                 }
             });
         });

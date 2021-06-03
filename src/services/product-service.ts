@@ -14,11 +14,11 @@ export class ProductServices extends BaseService {
             const category_fields = await Category.findById(newProduct.category_id);
             const notProvidedFields = [];
             if (category_fields) {
-                for (const f of category_fields.fields) {
+                for (const field of category_fields.fields) {
                     let nameFlag = false;
-                    for (const v of f.values) {
+                    for (const value of field.values) {
                         const valueFlag = newProduct.fields.find((productField) => {
-                            if (productField.name === f.name && productField.value === v) {
+                            if (productField.name === field.name && productField.value === value) {
                                 return true;
                             }
                         });
@@ -28,7 +28,7 @@ export class ProductServices extends BaseService {
                         }
                     }
                     if (!nameFlag) {
-                        notProvidedFields.push({ name: f.name });
+                        notProvidedFields.push({ name: field.name });
                     }
                 }
             }

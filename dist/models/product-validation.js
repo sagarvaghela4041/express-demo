@@ -53,7 +53,8 @@ var PorductDTO = /** @class */ (function () {
         this.fields = product.fields.map(function (fields) { return new ProductFieldDTO(fields); });
     }
     __decorate([
-        class_validator_1.IsString()
+        class_validator_1.IsString(),
+        class_validator_1.Length(4, 20)
     ], PorductDTO.prototype, "title", void 0);
     __decorate([
         class_validator_1.ValidateNested({ each: true }),
@@ -64,7 +65,8 @@ var PorductDTO = /** @class */ (function () {
         class_validator_1.IsString({ each: true })
     ], PorductDTO.prototype, "images", void 0);
     __decorate([
-        class_validator_1.IsString()
+        class_validator_1.IsString(),
+        class_validator_1.IsNotEmpty()
     ], PorductDTO.prototype, "category_id", void 0);
     __decorate([
         class_validator_1.ValidateNested({ each: true }),
