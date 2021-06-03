@@ -50,8 +50,8 @@ export class UserServices {
             }
             else {
                 const varifiedUser = jwt.verify(userCheck.token, `${process.env.PRIVATE_KEY}`) as { id: string };
-
                 if (userCheck._id == varifiedUser.id) {
+                    res.cookie('token', userCheck.token, { httpOnly: true });
                     res.json({ message: messages.valid_user });
                 }
                 else {

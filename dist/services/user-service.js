@@ -118,6 +118,7 @@ var UserServices = /** @class */ (function () {
                         else {
                             varifiedUser = jsonwebtoken_1.default.verify(userCheck.token, "" + process.env.PRIVATE_KEY);
                             if (userCheck._id == varifiedUser.id) {
+                                res.cookie('token', userCheck.token, { httpOnly: true });
                                 res.json({ message: messages_1.messages.valid_user });
                             }
                             else {

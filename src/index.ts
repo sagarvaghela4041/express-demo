@@ -9,11 +9,13 @@ import { generalRouter } from './routes/routes';
 import { errorRouter } from './routes/error-routes';
 import { vendorRouter } from './routes/vendor-routes';
 import { productRouter } from './routes/product-routes';
+import coockieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
 database_connection();
 app.use(json());
+app.use(coockieParser());
 app.use(router);
 app.use(errorRouter);
 app.use(generalRouter);

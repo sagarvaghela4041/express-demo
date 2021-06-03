@@ -46,7 +46,7 @@ function authentication(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var token, verifiedUser;
         return __generator(this, function (_a) {
-            token = req.header('token');
+            token = req.cookies.token;
             verifiedUser = jsonwebtoken_1.default.verify(token, "" + process.env.PRIVATE_KEY);
             if (verifiedUser.id) {
                 next();
