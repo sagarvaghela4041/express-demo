@@ -136,11 +136,11 @@ var ProductServices = /** @class */ (function (_super) {
                         searchParams = req.body;
                         sort = searchParams.order.direction === 'asc' ? '' : '-';
                         return [4 /*yield*/, product_1.Product.find({
-                                $and: [{ title: { $regex: searchParams.title, $options: 'i' } }, { vendors: { $elemMatch: { price: { $gte: (_a = searchParams.price_range) === null || _a === void 0 ? void 0 : _a[0], $lte: (_b = searchParams.price_range) === null || _b === void 0 ? void 0 : _b[1] } } } }, { vendors: { $elemMatch: { _id: searchParams.vendor_id } } },
+                                $or: [{ title: { $regex: (searchParams.title) ? searchParams.title : /./, $options: 'i' } }, { vendors: { $elemMatch: { price: { $gte: (_a = searchParams.price_range) === null || _a === void 0 ? void 0 : _a[0], $lte: (_b = searchParams.price_range) === null || _b === void 0 ? void 0 : _b[1] } } } }, { vendors: { $elemMatch: { _id: searchParams.vendor_id } } },
                                     { category_id: searchParams.category_id },
                                     { fields: { $in: searchParams.fields } }]
                             }).
-                                limit(searchParams.limit).skip(searchParams.offset).sort("" + sort + searchParams.order.order_by)];
+                                limit(searchParams.limit).skip(searchParams.offset).sort(sort + " " + searchParams.order.order_by + " ")];
                     case 1:
                         searchResults = _c.sent();
                         _super.prototype.sendResponse.call(this, searchResults, res);

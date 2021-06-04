@@ -1,6 +1,6 @@
 import { BaseService } from "./services-base";
 import { Request, Response } from 'express';
-import { PorductDTO, ProductFieldDTO } from "../models/product-validation";
+import { PorductDTO } from "../models/product-validation";
 import { ValidationServices } from "./validation-service";
 import { Product } from "../entitymodels/product";
 import { Category } from "../entitymodels/category";
